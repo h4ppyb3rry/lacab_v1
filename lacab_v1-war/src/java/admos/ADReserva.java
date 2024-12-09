@@ -7,6 +7,11 @@ package admos;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
+import javax.ejb.EJB;
+import manipuladatos.MDReserva;
+import modelo.Huesped;
+import modelo.Reservacion;
 
 /**
  *
@@ -16,10 +21,36 @@ import java.io.Serializable;
 @SessionScoped
 public class ADReserva implements Serializable {
 
-    /**
-     * Creates a new instance of ADReserva
-     */
-    public ADReserva() {
+    @EJB
+    private MDReserva mDReserva;
+    private Reservacion reserva;
+    private Huesped huesped;
+
+    public void creaReserva() {
+        reserva = new Reservacion();
     }
-    
+
+    public List<Reservacion> getReservaciones() {
+        return mDReserva.reservaciones();
+    }
+
+    public void registroReserva() {
+        reserva.setNumHuesped(huesped);
+
+        mDReserva.insertarReserva(reserva);
+        creaReserva();
+    }
+
+    public Reservacion getReserva() {
+        return reserva;
+    }
+
+    public void setReserva(Reservacion reserva) {
+        this.reserva = reserva;
+    }
+
+    public ADReserva() {
+        creaReserva();
+    }
+
 }

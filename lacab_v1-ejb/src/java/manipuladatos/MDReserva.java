@@ -4,8 +4,12 @@
  */
 package manipuladatos;
 
+import accesodatos.ReservacionFacade;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import modelo.Reservacion;
 
 /**
  *
@@ -15,6 +19,19 @@ import javax.ejb.LocalBean;
 @LocalBean
 public class MDReserva {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @EJB
+    private ReservacionFacade reservacionF;
+    public void insertarReserva(Reservacion r){
+        reservacionF.create(r);
+    }
+
+     public List<Reservacion> reservaciones(){
+       return reservacionF.findAll();  
+     }
+    
+     public void actualizarReserva(Reservacion r){
+        reservacionF.edit(r);
+    }
+
+  
 }
