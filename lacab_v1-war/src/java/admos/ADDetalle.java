@@ -54,22 +54,22 @@ public class ADDetalle implements Serializable {
     }
 
     public void agregarHabitacion() {
-    if (detalle.getNumHab() != null) { 
-        // Verificar que el detalle con la misma habitación no esté ya en la lista
-        boolean habitacionYaAñadida = listaDetalles.stream()
-                .anyMatch(d -> d.getNumHab().equals(detalle.getNumHab())); // Comparar por habitación
-        
-        if (!habitacionYaAñadida) {
-            listaDetalles.add(detalle); // Agrega el detalle a la lista
-            nuevoDetalle(); // Reinicia el detalle para una nueva habitación
-        } else {
-            System.out.println("Error: La habitación ya ha sido añadida.");
-        }
-    } else {
-        System.out.println("Error: No se ha seleccionado una habitación.");
-    }
-}
+        if (detalle.getNumHab() != null) {
 
+            boolean habitacionYaAñadida = listaDetalles.stream()
+                    .anyMatch(d -> d.getNumHab().equals(detalle.getNumHab())); // comparar por habitación
+
+            if (!habitacionYaAñadida) {
+                listaDetalles.add(detalle);
+
+                nuevoDetalle();
+            } else {
+                System.out.println("Error: La habitación ya ha sido añadida.");
+            }
+        } else {
+            System.out.println("Error: No se ha seleccionado una habitación.");
+        }
+    }
 
     public void eliminarDetalle(DetalleReservacion detalle) {
         listaDetalles.remove(detalle);
@@ -81,6 +81,15 @@ public class ADDetalle implements Serializable {
             for (DetalleReservacion d : listaDetalles) {
                 d.setNumReserva(reserva);
                 mDDetalles.insertarDetalle(d);
+
+                Habitacion habitacion = d.getNumHab();
+                if (habitacion != null) {
+                    habitacion.setEstado("OCUPADA");
+                    aDHabitacion.setHabitacion(habitacion);
+                    aDHabitacion.actualizarValor();
+                } else {
+                    System.out.println("Error: Detalle sin habitación asociada.");
+                }
             }
             listaDetalles.clear();
             nuevoDetalle();

@@ -30,9 +30,6 @@
                         <f:selectItem itemValue="false" itemLabel="No" />
                     </p:selectOneRadio>
 
-                    <p:outputLabel value="Estado:" for="estado" />
-                    <p:inputText id="estado" value="#{aDReserva.reserva.estado}" title="Estado" required="true" requiredMessage="The Estado field is required."/>
-
                     <p:outputLabel value="¿Necesidades especiales?" for="necesEsp" />
                     <p:selectOneRadio id="necesEsp" required="true" value="#{aDReserva.reserva.necesEsp}" >
                         <f:selectItem itemValue="true" itemLabel="Sí" />

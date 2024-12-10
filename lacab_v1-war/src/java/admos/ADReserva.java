@@ -45,6 +45,7 @@ public class ADReserva implements Serializable {
     }
 
     public String registroReserva() {
+        reserva.setEstado("EN CURSO");
         mDReserva.insertarReserva(reserva);
        // creaReserva();
         

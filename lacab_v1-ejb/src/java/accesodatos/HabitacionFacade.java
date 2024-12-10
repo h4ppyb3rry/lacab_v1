@@ -22,7 +22,7 @@ public class HabitacionFacade extends AbstractFacade<Habitacion> {
     private EntityManager em;
 
     @Override
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return em;
     }
 
@@ -42,5 +42,7 @@ public class HabitacionFacade extends AbstractFacade<Habitacion> {
         }
         return habitaciones;
     }
+    
+    
 
 }
