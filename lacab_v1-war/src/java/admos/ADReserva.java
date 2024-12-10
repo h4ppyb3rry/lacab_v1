@@ -24,7 +24,16 @@ public class ADReserva implements Serializable {
     @EJB
     private MDReserva mDReserva;
     private Reservacion reserva;
-    private Huesped huesped;
+
+    private Huesped numHuesped;
+
+    public Huesped getNumHuesped() {
+        return numHuesped;
+    }
+
+    public void setNumHuesped(Huesped numHuesped) {
+        this.numHuesped = numHuesped;
+    }
 
     public void creaReserva() {
         reserva = new Reservacion();
@@ -35,8 +44,6 @@ public class ADReserva implements Serializable {
     }
 
     public void registroReserva() {
-        reserva.setNumHuesped(huesped);
-
         mDReserva.insertarReserva(reserva);
         creaReserva();
     }

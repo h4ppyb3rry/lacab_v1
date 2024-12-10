@@ -9,8 +9,6 @@
     </h:head>
     <h:body>
         <f:view>
-
-
             <h:form>
                 <h1><h:outputText value="Nueva Reserva"/></h1>
                 <p:panelGrid columns="2">
@@ -18,15 +16,15 @@
                     <p:inputText id="numHabitaciones" value="#{aDReserva.reserva.numHabitaciones}" title="NumHabitaciones" required="true" requiredMessage="The NumHabitaciones field is required."/>
                     <p:outputLabel value="Número de personas" for="numPersonas" />
                     <p:inputText id="numPersonas" value="#{aDReserva.reserva.numPersonas}" title="NumPersonas" required="true" requiredMessage="The NumPersonas field is required."/>
-                    <p:outputLabel value="Fecha d llegada:" for="fechaLlegada" />
+                    <p:outputLabel value="Fecha de llegada:" for="fechaLlegada" />
                     <p:inputText id="fechaLlegada" value="#{aDReserva.reserva.fechaLlegada}" title="FechaLlegada" required="true" requiredMessage="The FechaLlegada field is required.">
                         <f:convertDateTime pattern="MM/dd/yyyy" timeZone="America/Mexico_City"/>
                     </p:inputText>
-                    <p:outputLabel value="Fecha de Salida:" for="fechaSalida" />
+                    <p:outputLabel value="Fecha de salida:" for="fechaSalida" />
                     <p:inputText id="fechaSalida" value="#{aDReserva.reserva.fechaSalida}" title="FechaSalida" >
                         <f:convertDateTime pattern="MM/dd/yyyy" timeZone="America/Mexico_City"/>
                     </p:inputText>
-                    <p:outputLabel value="Deposito:" for="deposito" />
+                    <p:outputLabel value="Deposito inicial:" for="deposito" />
                     <p:selectOneRadio id="deposito" required="true" value="#{aDReserva.reserva.deposito}" >
                         <f:selectItem itemValue="true" itemLabel="Sí" />
                         <f:selectItem itemValue="false" itemLabel="No" />
@@ -35,18 +33,19 @@
                     <p:outputLabel value="Estado:" for="estado" />
                     <p:inputText id="estado" value="#{aDReserva.reserva.estado}" title="Estado" required="true" requiredMessage="The Estado field is required."/>
 
-                    <p:outputLabel value="NecesEsp:" for="necesEsp" />
+                    <p:outputLabel value="¿Necesidades especiales?" for="necesEsp" />
                     <p:selectOneRadio id="necesEsp" required="true" value="#{aDReserva.reserva.necesEsp}" >
                         <f:selectItem itemValue="true" itemLabel="Sí" />
                         <f:selectItem itemValue="false" itemLabel="No" />
                     </p:selectOneRadio>
 
-                    <p:outputLabel value="Huésped:" for="numHuesped" />
-                    <p:selectOneMenu id="numHuesped" value="#{aDReserva.reserva.numHuesped}">
+                    <p:outputLabel value="Huésped titular:" for="numHuesped" />
+                    <p:selectOneMenu id="numHuesped" value="#{aDReserva.reserva.numHuesped}" converter="#{huespedConverter}" >
                         <f:selectItems value="#{aDHuesped.huespedes}" var="huesped"
-                                       itemValue="#{huesped.numHuesped}" itemLabel="#{huesped.nombre}" />
+                                       itemValue="#{huesped}" itemLabel="#{huesped.nombre}" />
                     </p:selectOneMenu>
-                </p:panelGrid> <!-- aún no funciona -->
+                </p:panelGrid> 
+
                 <p:commandButton value="RESERVAR" actionListener="#{aDReserva.registroReserva()}" ajax="false"/>
             </h:form>
         </f:view>
