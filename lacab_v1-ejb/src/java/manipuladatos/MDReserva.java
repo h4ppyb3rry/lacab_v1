@@ -21,6 +21,7 @@ public class MDReserva {
 
     @EJB
     private ReservacionFacade reservacionF;
+    
     public void insertarReserva(Reservacion r){
         reservacionF.create(r);
     }

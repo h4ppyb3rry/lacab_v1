@@ -21,20 +21,17 @@ public class MDHuesped {
 
     @EJB
     private HuespedFacade huespedF;
-    
-    public void insertarHuesped(Huesped h){
+
+    public void insertarHuesped(Huesped h) {
         huespedF.create(h);
     }
 
-     public List<Huesped> huespedes(){
-       return huespedF.findAll();  
-     }
-     
-     public Huesped buscarHuespedPorId(Integer id) {
-    return huespedF.find(id); // Utiliza el método `find` del facade
-}
+    public List<Huesped> huespedes() {
+        return huespedF.findAll();
+    }
 
-    
-    
+    public Huesped buscarHuespedPorId(Integer id) {
+        return huespedF.find(id);
+    }
 
 }

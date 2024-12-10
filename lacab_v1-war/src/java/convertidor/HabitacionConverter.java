@@ -14,16 +14,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import modelo.Huesped;
-import manipuladatos.MDHuesped;
 import javax.inject.Inject;
+import manipuladatos.MDHabitacion;
+import modelo.Habitacion;
 
-@Named("huespedConverter")
+@Named("habitacionConverter")
 @RequestScoped
-public class HuespedConverter implements Converter {
+public class HabitacionConverter implements Converter {
 
     @Inject
-    private MDHuesped mDHuesped;
+    private MDHabitacion mDHabitacion;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -32,7 +32,7 @@ public class HuespedConverter implements Converter {
         }
         try {
             Integer id = Integer.valueOf(value);
-            return mDHuesped.buscarHuespedPorId(id); 
+            return mDHabitacion.buscarHabitacion(id); 
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("El ID del huésped no es válido: " + value);
         }
@@ -40,9 +40,9 @@ public class HuespedConverter implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if (value == null || !(value instanceof Huesped)) {
+        if (value == null || !(value instanceof Habitacion)) {
             return "";
         }
-        return String.valueOf(((Huesped) value).getNumHuesped());
+        return String.valueOf(((Habitacion) value).getNumHab());
     }
 }

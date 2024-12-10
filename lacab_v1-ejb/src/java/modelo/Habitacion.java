@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Habitacion.findByCapacidad", query = "SELECT h FROM Habitacion h WHERE h.capacidad = :capacidad"),
     @NamedQuery(name = "Habitacion.findByNumCamas", query = "SELECT h FROM Habitacion h WHERE h.numCamas = :numCamas"),
     @NamedQuery(name = "Habitacion.findByPiso", query = "SELECT h FROM Habitacion h WHERE h.piso = :piso"),
-    @NamedQuery(name = "Habitacion.findByEstado", query = "SELECT h FROM Habitacion h WHERE h.estado = :estado")})
+    @NamedQuery(name = "Habitacion.findByEstado", query = "SELECT h FROM Habitacion h WHERE h.estado = :estado"),
+    @NamedQuery(name = "Habitacion.findByTv", query = "SELECT h FROM Habitacion h WHERE h.tv = :tv")})
 public class Habitacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,6 +67,10 @@ public class Habitacion implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "estado")
     private String estado;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "tv")
+    private boolean tv;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "numHab")
     private List<DetalleReservacion> detalleReservacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "numHab")
@@ -78,13 +83,14 @@ public class Habitacion implements Serializable {
         this.numHab = numHab;
     }
 
-    public Habitacion(Integer numHab, long tarifa, int capacidad, int numCamas, int piso, String estado) {
+    public Habitacion(Integer numHab, long tarifa, int capacidad, int numCamas, int piso, String estado, boolean tv) {
         this.numHab = numHab;
         this.tarifa = tarifa;
         this.capacidad = capacidad;
         this.numCamas = numCamas;
         this.piso = piso;
         this.estado = estado;
+        this.tv = tv;
     }
 
     public Integer getNumHab() {
@@ -133,6 +139,14 @@ public class Habitacion implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public boolean getTv() {
+        return tv;
+    }
+
+    public void setTv(boolean tv) {
+        this.tv = tv;
     }
 
     @XmlTransient

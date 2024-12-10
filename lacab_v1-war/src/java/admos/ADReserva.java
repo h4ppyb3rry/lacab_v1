@@ -24,6 +24,7 @@ public class ADReserva implements Serializable {
     @EJB
     private MDReserva mDReserva;
     private Reservacion reserva;
+    
 
     private Huesped numHuesped;
 
@@ -43,9 +44,11 @@ public class ADReserva implements Serializable {
         return mDReserva.reservaciones();
     }
 
-    public void registroReserva() {
+    public String registroReserva() {
         mDReserva.insertarReserva(reserva);
-        creaReserva();
+       // creaReserva();
+        
+        return "detalle_reserva.xhtml?faces-redirect=true";
     }
 
     public Reservacion getReserva() {

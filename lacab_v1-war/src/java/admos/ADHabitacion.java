@@ -43,6 +43,11 @@ public class ADHabitacion implements Serializable {
     }
 
     
+    public List<Habitacion> getDisponibles() {
+        return mDHabitacion.habitacionesDisponibles();
+    } 
+
+    
     public ADHabitacion() {
     }
     

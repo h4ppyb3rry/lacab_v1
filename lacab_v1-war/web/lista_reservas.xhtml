@@ -10,45 +10,42 @@
     <h:body>
         <f:view>
 
-
             <h:form>
-                <h1><h:outputText value="Monitoreo de habitaciones"/></h1>
-                <p:dataTable value="#{aDHabitacion.habitaciones}" var="item">
+                <h1><h:outputText value="List"/></h1>
+                <p:dataTable value="#{aDReserva.reservaciones}" var="item">
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="NumHab"/>
+                            <h:outputText value="NumReserva"/>
                         </f:facet>
-                        <h:outputText value="#{item.numHab}"/>
+                        <h:outputText value="#{item.numReserva}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Tarifa"/>
+                            <h:outputText value="Huésped titular"/>
                         </f:facet>
-                        <h:outputText value="#{item.tarifa}"/>
+                        <h:outputText value="#{item.numHuesped.nombre}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Capacidad"/>
+                            <h:outputText value="Habitaciones"/>
                         </f:facet>
-                        <h:outputText value="#{item.capacidad}"/>
+                        <h:outputText value="#{item.numHabitaciones}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="NumCamas"/>
+                            <h:outputText value="Fecha de llegada"/>
                         </f:facet>
-                        <h:outputText value="#{item.numCamas}"/>
+                        <h:outputText value="#{item.fechaLlegada}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Piso"/>
+                            <h:outputText value="Fecha de salida"/>
                         </f:facet>
-                        <h:outputText value="#{item.piso}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="TV"/>
-                        </f:facet>
-                        <h:outputText value="#{item.tv}"/>
+                        <h:outputText value="#{item.fechaSalida}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
@@ -56,6 +53,8 @@
                         </f:facet>
                         <h:outputText value="#{item.estado}"/>
                     </p:column>
+                    
+                    
                 </p:dataTable>
             </h:form>
         </f:view>

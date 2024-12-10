@@ -29,7 +29,16 @@ public class MDHabitacion {
      public List<Habitacion> habitaciones(){
        return habitacionF.findAll();  
      }
-    
+     
+     
+     public List<Habitacion> habitacionesDisponibles(){
+       return habitacionF.habitacionesDisponibles();  
+     }
+     
+     public Habitacion buscarHabitacion(Integer id) {
+        return habitacionF.find(id);
+    }
 
     
+     
 }
