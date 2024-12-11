@@ -7,11 +7,15 @@ package admos;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import manipuladatos.MDReserva;
@@ -122,6 +126,7 @@ public class ADReserva implements Serializable {
         }
     }
     
+
 
 
     public ADReserva() {

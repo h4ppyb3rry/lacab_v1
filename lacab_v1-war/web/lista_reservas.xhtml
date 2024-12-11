@@ -36,7 +36,7 @@
                             <h:outputText value="Llegada"/>
                         </f:facet>
                         <h:outputText value="#{item.fechaLlegada}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
                         </h:outputText>
                     </p:column>
                     <p:column>
@@ -44,7 +44,7 @@
                             <h:outputText value="Salida"/>
                         </f:facet>
                         <h:outputText value="#{item.fechaSalida}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                           <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
                         </h:outputText>
                     </p:column>
                      <p:column>

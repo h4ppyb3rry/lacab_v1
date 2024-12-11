@@ -9,7 +9,8 @@
     </h:head>
     <h:body>
         <f:view>
-            <h:form>
+            <p:growl id="mensaje"/>
+            <h:form id="formId">
                 <h1><h:outputText value="Nueva Reserva"/></h1>
                 <p:panelGrid columns="2">
                     <p:outputLabel value="Número de habitaciones" for="numHabitaciones" />
@@ -18,11 +19,11 @@
                     <p:inputText id="numPersonas" value="#{aDReserva.reserva.numPersonas}" title="NumPersonas" required="true" requiredMessage="The NumPersonas field is required."/>
                     <p:outputLabel value="Fecha de llegada:" for="fechaLlegada" />
                     <p:inputText id="fechaLlegada" value="#{aDReserva.reserva.fechaLlegada}" title="FechaLlegada" required="true" requiredMessage="The FechaLlegada field is required.">
-                        <f:convertDateTime pattern="MM/dd/yyyy" timeZone="America/Mexico_City"/>
+                      <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
                     </p:inputText>
                     <p:outputLabel value="Fecha de salida:" for="fechaSalida" />
                     <p:inputText id="fechaSalida" value="#{aDReserva.reserva.fechaSalida}" title="FechaSalida" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" timeZone="America/Mexico_City"/>
+                       <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
                     </p:inputText>
                     <p:outputLabel value="Deposito inicial:" for="deposito" />
                     <p:selectOneRadio id="deposito" required="true" value="#{aDReserva.reserva.deposito}" >
@@ -43,7 +44,7 @@
                     </p:selectOneMenu>
                 </p:panelGrid> 
 
-                <p:commandButton value="RESERVAR" action="#{aDReserva.registroReserva}" ajax="false"/>
+                <p:commandButton value="RESERVAR" action="#{aDReserva.registroReserva}" ajax="false" update="mensaje"/>
             </h:form>
         </f:view>
 
