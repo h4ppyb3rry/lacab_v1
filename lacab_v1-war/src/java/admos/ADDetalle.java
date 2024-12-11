@@ -4,6 +4,7 @@
  */
 package admos;
 
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import manipuladatos.MDDetalles;
@@ -45,6 +47,7 @@ public class ADDetalle implements Serializable {
 
         habitacionesDisponibles = hDisponibles();
         listaDetalles = new ArrayList<>();
+         listaDetalles.clear();
         nuevoDetalle();
     }
 
@@ -54,28 +57,65 @@ public class ADDetalle implements Serializable {
     }
 
     public void agregarHabitacion() {
-        if (detalle.getNumHab() != null) {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        reserva = aDReserva.getReserva();
 
-            boolean habitacionYaAñadida = listaDetalles.stream()
+        if (detalle.getNumHab() != null) {
+            boolean habitacionAdentro = listaDetalles.stream()
                     .anyMatch(d -> d.getNumHab().equals(detalle.getNumHab())); // comparar por habitación
 
-            if (!habitacionYaAñadida) {
-                listaDetalles.add(detalle);
-
-                nuevoDetalle();
+            if (listaDetalles.size() < reserva.getNumHabitaciones()) {
+                if (!habitacionAdentro) {
+                    listaDetalles.add(detalle);
+                    nuevoDetalle();
+                    FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            "Habitación añadida correctamente.", null);
+                    contexto.addMessage(null, msj);
+                } else {
+                    FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "Esta habitación ya ha sido añadida.", null);
+                    contexto.addMessage(null, msj);
+                }
             } else {
-                System.out.println("Error: La habitación ya ha sido añadida.");
+                FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Estás sobrepasando el número de habitaciones designadas en la reservación.", null);
+                contexto.addMessage(null, msj);
             }
+        } else {
+            FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "No se ha seleccionado una habitación.", null);
+            contexto.addMessage(null, msj);
+        }
+    }
+
+
+    /*public void agregarHabitacion() {
+         //FacesContext contexto = FacesContext.getCurrentInstance();
+        reserva = aDReserva.getReserva();
+        if (detalle.getNumHab() != null) {
+
+            boolean habitacionAdentro = listaDetalles.stream()
+                    .anyMatch(d -> d.getNumHab().equals(detalle.getNumHab())); // comparar por habitación
+
+            if (listaDetalles.size() < reserva.getNumHabitaciones()) {
+                if (!habitacionAdentro) {
+                    listaDetalles.add(detalle);
+
+                    nuevoDetalle();
+                } else {
+                    System.out.println("Error: La habitación ya ha sido añadida.");
+                }
+            } 
+           // FacesMessage msj = new FacesMessage("Estás sobrepasando el número de habitaciones.");
+            //contexto.addMessage(null, msj);
+            System.out.println("Error: Estás sobrepasando el número de habitaciones");
         } else {
             System.out.println("Error: No se ha seleccionado una habitación.");
         }
     }
-
-    public void eliminarDetalle(DetalleReservacion detalle) {
-        listaDetalles.remove(detalle);
-    }
-
-    public void registroReserva() {
+    
+    
+        public void registroReserva() {
         reserva = aDReserva.getReserva();
         if (reserva != null) {
             for (DetalleReservacion d : listaDetalles) {
@@ -95,6 +135,49 @@ public class ADDetalle implements Serializable {
             nuevoDetalle();
         } else {
             System.out.println("Error: No se puede registrar detalles sin una reserva activa.");
+        }
+    }
+    
+    
+    
+     */
+    public void eliminarDetalle(DetalleReservacion detalle) {
+        listaDetalles.remove(detalle);
+    }
+
+    public void registroReserva() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        reserva = aDReserva.getReserva();
+
+        if (reserva != null) {
+            for (DetalleReservacion d : listaDetalles) {
+                d.setNumReserva(reserva);
+                mDDetalles.insertarDetalle(d);
+
+                Habitacion habitacion = d.getNumHab();
+                if (habitacion != null) {
+                    habitacion.setEstado("OCUPADA");
+                    aDHabitacion.setHabitacion(habitacion);
+                    aDHabitacion.actualizarValor();
+                } else {
+                    System.out.println("Error: Detalle sin habitación asociada.");
+                }
+            }
+            //listaDetalles.clear();
+            //nuevoDetalle();
+
+            try {
+                contexto.getExternalContext().redirect("conf_reserva.xhtml");
+            } catch (IOException e) {
+                FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error al redirigir a la página de confirmación.", null);
+                contexto.addMessage(null, mensaje);
+            }
+        } else {
+            System.out.println("Error: No se puede registrar detalles sin una reserva activa.");
+            FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error: No se puede registrar detalles sin una reserva activa.", null);
+            contexto.addMessage(null, mensaje);
         }
     }
 

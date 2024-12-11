@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Confirmación de Reservación</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h1>RESERVACIÓN COMPLETADA</h1>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Número de Reservación:" for="numReserva" />
+                <h:outputText id="numReserva" value="#{aDReserva.reserva.numReserva}" />
+                <p:outputLabel value="Huésped Titular:" for="huesped" />
+                <h:outputText id="huesped" value="#{aDReserva.reserva.numHuesped.nombre}" />
+            </p:panelGrid>
+
+            <h2>Habitaciones Seleccionadas</h2>
+            <p:dataTable value="#{aDDetalle.listaDetalles}" var="detalle" >
+                <p:column headerText="Número de Habitación">
+                    <h:outputText value="#{detalle.numHab.numHab}" />
+                </p:column>
+                <p:column headerText="Tarifa">
+                    <h:outputText value="#{detalle.numHab.tarifa}" />
+                </p:column>
+            </p:dataTable>
+
+            <p:commandButton value="Volver a Inicio" action="nueva_reserva.xhtml?faces-redirect=true" />
+        </h:form>
+    </h:body>
+</html>

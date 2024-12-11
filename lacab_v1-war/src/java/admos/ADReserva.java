@@ -8,6 +8,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import manipuladatos.MDReserva;
 import modelo.Huesped;
@@ -24,9 +25,9 @@ public class ADReserva implements Serializable {
     @EJB
     private MDReserva mDReserva;
     private Reservacion reserva;
-    
-
     private Huesped numHuesped;
+    
+    
 
     public Huesped getNumHuesped() {
         return numHuesped;
@@ -45,7 +46,8 @@ public class ADReserva implements Serializable {
     }
 
     public String registroReserva() {
-        reserva.setEstado("EN CURSO");
+        reserva.setEstado("ACTIVA");
+        //reserva.setFechaSalida(null);
         mDReserva.insertarReserva(reserva);
        // creaReserva();
         

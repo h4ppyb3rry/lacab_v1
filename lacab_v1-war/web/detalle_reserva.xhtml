@@ -10,10 +10,12 @@
     <h:body>
         <h:form>
             <h1>Detalles de Reservación</h1>
-
+            <p:growl id="mensaje" life="5000"/>  
             <p:panelGrid columns="2">
                 <p:outputLabel value="Número de Reservación:" for="numReserva" />
                 <h:outputText id="numReserva" value="#{aDReserva.reserva.numReserva}" />
+                <p:outputLabel value="Número de Habitaciones:" for="cantHab" />
+                <h:outputText id="cantHab" value="#{aDReserva.reserva.numHabitaciones}" />
             </p:panelGrid>
 
             <h2>Agregar Habitaciones</h2>
@@ -22,7 +24,7 @@
                 <p:selectOneMenu id="habitaciones" value="#{aDDetalle.detalle.numHab}" converter="#{habitacionConverter}">
                     <f:selectItems value="#{aDHabitacion.disponibles}" var="hab" itemLabel="#{hab.numHab}" itemValue="#{hab}" />
                 </p:selectOneMenu>
-                <p:commandButton value="Agregar" ajax="false" action="#{aDDetalle.agregarHabitacion}" update="tablaDetalles" />
+                <p:commandButton value="Agregar" ajax="false" action="#{aDDetalle.agregarHabitacion}" update="mensaje tablaDetalles"/>
             </p:panelGrid>
 
             <h2>Habitaciones Seleccionadas</h2>
