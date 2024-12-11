@@ -16,7 +16,7 @@
                 <p:dataTable value="#{aDHabitacion.habitaciones}" var="item">
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="NumHab"/>
+                            <h:outputText value="No. Habitación"/>
                         </f:facet>
                         <h:outputText value="#{item.numHab}"/>
                     </p:column>
@@ -34,7 +34,7 @@
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="NumCamas"/>
+                            <h:outputText value="No. Camas"/>
                         </f:facet>
                         <h:outputText value="#{item.numCamas}"/>
                     </p:column>
@@ -48,7 +48,7 @@
                         <f:facet name="header">
                             <h:outputText value="TV"/>
                         </f:facet>
-                        <h:outputText value="#{item.tv}"/>
+                       <h:outputText value="#{item.tv ? '✓' : 'X'}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">

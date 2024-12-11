@@ -4,16 +4,14 @@
  */
 package admos;
 
-import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import manipuladatos.MDReserva;
@@ -41,6 +39,9 @@ public class ADReserva implements Serializable {
 
     @Inject
     private ADDetalle aDDetalle;
+    
+    @Inject
+    private ADNota aDNota;
 
     public Huesped getNumHuesped() {
         return numHuesped;
@@ -86,11 +87,13 @@ public class ADReserva implements Serializable {
         return mDReserva.reservasActivas();
     }
 
+    
+    
     public void finalizarReserva(Reservacion reserva) {
         if (reserva != null) {
             reserva.setEstado("FINALIZADA");
-
-            reserva.setFechaSalida(new Date());
+            
+           // reserva.setFechaSalida(new Date());
 
             // cambiar el estado 
             List<DetalleReservacion> detalles = aDDetalle.getDetalles(reserva);
@@ -102,13 +105,24 @@ public class ADReserva implements Serializable {
                     aDHabitacion.actualizarValor();
                 }
             }
-
             mDReserva.actualizarReserva(reserva);
-            System.out.println("La reservación " + reserva.getNumReserva() + " ha sido finalizada.");
+            
+            System.out.println("Reservación " + reserva.getNumReserva() + " ha sido finalizada.");
         } else {
             System.out.println("Error");
         }
     }
+    
+    public void actualizarReserva() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        if (reserva != null) {
+            mDReserva.actualizarReserva(reserva);
+             FacesMessage msj = new FacesMessage("¡Valor actualizado!");
+            contexto.addMessage(null, msj);
+        }
+    }
+    
+
 
     public ADReserva() {
         creaReserva();
