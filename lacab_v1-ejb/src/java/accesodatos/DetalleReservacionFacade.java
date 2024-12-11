@@ -4,10 +4,12 @@
  */
 package accesodatos;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import modelo.DetalleReservacion;
+import modelo.Reservacion;
 
 /**
  *
@@ -26,6 +28,13 @@ public class DetalleReservacionFacade extends AbstractFacade<DetalleReservacion>
 
     public DetalleReservacionFacade() {
         super(DetalleReservacion.class);
+    }
+    
+    
+    public List<DetalleReservacion> obtenerDetalles(Reservacion reserva) {
+        return em.createQuery("SELECT d FROM DetalleReservacion d WHERE d.numReserva = :reserva", DetalleReservacion.class)
+                .setParameter("reserva", reserva)
+                .getResultList();
     }
     
 }

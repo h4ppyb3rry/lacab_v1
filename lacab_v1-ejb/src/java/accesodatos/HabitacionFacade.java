@@ -44,5 +44,30 @@ public class HabitacionFacade extends AbstractFacade<Habitacion> {
     }
     
     
+    public List<Habitacion> habitacionesMantenimiento() {
+        List<Habitacion> habitaciones = null;
+        try {
+            Query consultaID = em.createNamedQuery("Habitacion.findByEstado");
+            consultaID.setParameter("estado", "MANTENIMIENTO");
+            habitaciones = (List<Habitacion>) consultaID.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+        return habitaciones;
+    }
+    
+    public List<Habitacion> habitacionesOcupadas() {
+        List<Habitacion> habitaciones = null;
+        try {
+            Query consultaID = em.createNamedQuery("Habitacion.findByEstado");
+            consultaID.setParameter("estado", "OCUPADA");
+            habitaciones = (List<Habitacion>) consultaID.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+        return habitaciones;
+    }
+    
+    
 
 }

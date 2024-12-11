@@ -17,7 +17,7 @@
             </p:panelGrid>
 
             <h2>Habitaciones Seleccionadas</h2>
-            <p:dataTable value="#{aDDetalle.listaDetalles}" var="detalle" >
+            <p:dataTable value="#{aDDetalle.getDetalles(aDReserva.reserva)}" var="detalle" >
                 <p:column headerText="Número de Habitación">
                     <h:outputText value="#{detalle.numHab.numHab}" />
                 </p:column>
@@ -26,7 +26,7 @@
                 </p:column>
             </p:dataTable>
 
-            <p:commandButton value="Volver a Inicio" action="nueva_reserva.xhtml?faces-redirect=true" />
+            <p:commandButton value="VER RESERVAS" action="lista_reserva.xhtml?faces-redirect=true" />
         </h:form>
     </h:body>
 </html>

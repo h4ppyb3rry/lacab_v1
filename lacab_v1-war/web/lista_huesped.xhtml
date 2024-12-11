@@ -11,39 +11,38 @@
         <f:view>
 
             <h:form>
-                <h1><h:outputText value="Reservas Activas"/></h1>
-                <p:dataTable value="#{aDReserva.activas}" var="item">
+                
+                <h1><h:outputText value="Huéspedes Registrados"/></h1>
+                <p:dataTable value="#{aDHuesped.huespedes}" var="item">
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="NumReserva"/>
+                            <h:outputText value="Nombre"/>
                         </f:facet>
-                        <h:outputText value="#{item.numReserva}"/>
+                        <h:outputText value="#{item.nombre}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Huésped titular"/>
+                            <h:outputText value="Ocupacion"/>
                         </f:facet>
-                        <h:outputText value="#{item.numHuesped.nombre}"/>
+                        <h:outputText value="#{item.ocupacion}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Habitaciones"/>
+                            <h:outputText value="Residencia"/>
                         </f:facet>
-                        <h:outputText value="#{item.numHabitaciones}"/>
+                        <h:outputText value="#{item.residencia}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Llegada"/>
+                            <h:outputText value="Domicilio"/>
                         </f:facet>
-                        <h:outputText value="#{item.fechaLlegada}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
+                        <h:outputText value="#{item.domicilio}"/>
                     </p:column>
-                     <p:column>
+                    <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Acciones"/>
+                            <h:outputText value="Nacionalidad"/>
                         </f:facet>
-                         <p:commandButton value="FINALIZAR" action="#{aDReserva.finalizarReserva(item)}" ajax="false" />
+                        <h:outputText value="#{item.nacionalidad}"/>
                     </p:column>
                 </p:dataTable>
             </h:form>

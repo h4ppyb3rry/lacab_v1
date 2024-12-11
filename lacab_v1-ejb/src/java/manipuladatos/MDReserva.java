@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import modelo.DetalleReservacion;
 import modelo.Reservacion;
 
 /**
@@ -33,6 +34,11 @@ public class MDReserva {
      public void actualizarReserva(Reservacion r){
         reservacionF.edit(r);
     }
+     
+    public List<Reservacion> reservasActivas(){
+       return reservacionF.reservasActivas();  
+     }
 
+    
   
 }

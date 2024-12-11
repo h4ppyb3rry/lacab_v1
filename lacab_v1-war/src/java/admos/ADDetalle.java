@@ -163,8 +163,8 @@ public class ADDetalle implements Serializable {
                     System.out.println("Error: Detalle sin habitación asociada.");
                 }
             }
-            //listaDetalles.clear();
-            //nuevoDetalle();
+            listaDetalles.clear();
+            nuevoDetalle();
 
             try {
                 contexto.getExternalContext().redirect("conf_reserva.xhtml");
@@ -180,6 +180,8 @@ public class ADDetalle implements Serializable {
             contexto.addMessage(null, mensaje);
         }
     }
+    
+    
 
     public List<Habitacion> hDisponibles() {
         return aDHabitacion.getDisponibles();
@@ -208,5 +210,10 @@ public class ADDetalle implements Serializable {
     public void setDetalle(DetalleReservacion detalle) {
         this.detalle = detalle;
     }
+    
+    public List<DetalleReservacion> getDetalles(Reservacion r) {
+        return mDDetalles.detallesReserva(r);
+    }
+    
 
 }

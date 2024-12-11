@@ -35,6 +35,16 @@ public class MDHabitacion {
        return habitacionF.habitacionesDisponibles();  
      }
      
+     
+     public List<Habitacion> habitacionesMantenimiento(){
+       return habitacionF.habitacionesMantenimiento();  
+     }
+     
+     
+     public List<Habitacion> habitacionesOcupadas(){
+       return habitacionF.habitacionesOcupadas();
+     }
+     
      public Habitacion buscarHabitacion(Integer id) {
         return habitacionF.find(id);
     }

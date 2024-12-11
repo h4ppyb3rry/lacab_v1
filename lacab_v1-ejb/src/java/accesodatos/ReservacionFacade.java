@@ -4,9 +4,12 @@
  */
 package accesodatos;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import modelo.DetalleReservacion;
 import modelo.Reservacion;
 
 /**
@@ -27,5 +30,19 @@ public class ReservacionFacade extends AbstractFacade<Reservacion> {
     public ReservacionFacade() {
         super(Reservacion.class);
     }
+
+    public List<Reservacion> reservasActivas() {
+        List<Reservacion> habitaciones = null;
+        try {
+            Query consultaID = em.createNamedQuery("Reservacion.findByEstado");
+            consultaID.setParameter("estado", "ACTIVA");
+            habitaciones = (List<Reservacion>) consultaID.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+        return habitaciones;
+    }
+
     
+
 }

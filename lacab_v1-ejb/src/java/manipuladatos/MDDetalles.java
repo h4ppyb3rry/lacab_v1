@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import modelo.DetalleReservacion;
+import modelo.Reservacion;
 
 /**
  *
@@ -29,6 +30,9 @@ public class MDDetalles {
        return detalleF.findAll();  
      }
     
+     public List<DetalleReservacion> detallesReserva(Reservacion r){
+       return detalleF.obtenerDetalles(r);  
+     }
     
 
     // Add business logic below. (Right-click in editor and choose
