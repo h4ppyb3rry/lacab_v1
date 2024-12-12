@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../resources/navbar_simple.xhtml">
+
+            <ui:define name="content">
+                 <h:form>
+            <h1>RESERVACIÓN COMPLETADA</h1>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Número de Reservación:" for="numReserva" />
+                <h:outputText id="numReserva" value="#{aDReserva.reserva.numReserva}" />
+                <p:outputLabel value="Huésped Titular:" for="huesped" />
+                <h:outputText id="huesped" value="#{aDReserva.reserva.numHuesped.nombre}" />
+            </p:panelGrid>
+
+            <h2>Habitaciones Seleccionadas</h2>
+            <p:dataTable value="#{aDDetalle.getDetalles(aDReserva.reserva)}" var="detalle" >
+                 <p:column headerText="No. Habitación">
+                    <h:outputText value="#{detalle.numHab.numHab}" />
+                </p:column>
+                 <p:column headerText="No. camas">
+                     <h:outputText value="#{detalle.numHab.numCamas}" />
+                </p:column>
+                 <p:column headerText="Capacidad">
+                     <h:outputText value="#{detalle.numHab.capacidad} persona(s)" />
+                </p:column>
+                <p:column headerText="Piso">
+                     <h:outputText value="#{detalle.numHab.piso}" />
+                </p:column>
+                 <p:column headerText="Tarifa">
+                     <h:outputText value="$#{detalle.numHab.tarifa}.00" />
+                </p:column>
+            </p:dataTable>
+
+            <p:commandButton value="VER RESERVAS" action="gestion_reserva.xhtml?faces-redirect=true" />
+            
+        </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

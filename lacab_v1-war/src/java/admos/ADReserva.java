@@ -46,6 +46,7 @@ public class ADReserva implements Serializable {
     private List<DetalleReservacion> listaDetalles;
     private Nota nota;
     private Habitacion habSelec;
+    private String gestion[] = {"false", "false", "false"};
 
     @Inject
     private ADHabitacion aDHabitacion;
@@ -82,7 +83,7 @@ public class ADReserva implements Serializable {
         //reserva.setFechaSalida(null);
         mDReserva.insertarReserva(reserva);
         // creaReserva();
-        return "detalle_reserva.xhtml?faces-redirect=true";
+        return "reserva_detalles.xhtml?faces-redirect=true";
     }
 
     public Reservacion getReserva() {
@@ -97,6 +98,7 @@ public class ADReserva implements Serializable {
         return mDReserva.reservasActivas();
     }
 
+    /*
     public String finalizarReserva(Reservacion reserva) {
         if (reserva != null) {
             reserva.setEstado("FINALIZADA");
@@ -116,14 +118,15 @@ public class ADReserva implements Serializable {
             mDReserva.actualizarReserva(reserva);
 
             System.out.println("Reservación " + reserva.getNumReserva() + " ha sido finalizada.");
-             return "nota_generada.xhtml?faces-redirect=true"; 
+             return "nota.xhtml?faces-redirect=true"; 
         } else {
             System.out.println("Error");
              return null;
         }
     }
+    
 
-    /*public void registroNota(Reservacion reserva) {
+    public void registroNota(Reservacion reserva) {
         //reserva = aDReserva.getReserva(); 
         if (reserva == null) {
             System.out.println("Error: No hay una reservación activa para generar la nota.");
@@ -158,6 +161,32 @@ public class ADReserva implements Serializable {
         //  creaNota(); 
     }*/
 
+    public void finalizarReserva(Reservacion reserva) {
+        if (reserva != null) {
+            reserva.setEstado("FINALIZADA");
+
+            List<DetalleReservacion> detalles = aDDetalle.getDetalles(reserva);
+
+            for (DetalleReservacion detalle : detalles) {
+                Habitacion habitacion = detalle.getNumHab();
+                if (habitacion != null) {
+                    habitacion.setEstado("DISPONIBLE");
+                    aDHabitacion.setHabitacion(habitacion);
+                    aDHabitacion.actualizarValor();
+                }
+            }
+
+            mDReserva.actualizarReserva(reserva);
+
+            System.out.println("Reservación " + reserva.getNumReserva() + " ha sido finalizada.");
+            FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Reservación finalizada correctamente", null);
+            FacesContext.getCurrentInstance().addMessage(null, mensaje);
+        } else {
+            System.err.println("Error al finalizar la reservación: reserva nula.");
+        }
+    }
+
     public void actualizarReserva() {
         FacesContext contexto = FacesContext.getCurrentInstance();
         if (reserva != null) {
@@ -169,18 +198,17 @@ public class ADReserva implements Serializable {
 
     public String nuevaReserva() {
         creaReserva();
-        return "nueva_reserva.xhtml?faces-redirect=true";
+        return "reserva_nueva.xhtml?faces-redirect=true";
     }
-    
-     public List<Habitacion> hDisponibles() {
+
+    public List<Habitacion> hDisponibles() {
         return aDHabitacion.getDisponibles();
     }
-     
-     
-     public int visitasTotales(Huesped h){
-         return mDReserva.visitasTotales(h);
-    
-}
+
+    public int visitasTotales(Huesped h) {
+        return mDReserva.visitasTotales(h);
+
+    }
 
     //validaciones
     public void vHab(FacesContext contexto, UIComponent obp, Object valorc) {
@@ -195,7 +223,6 @@ public class ADReserva implements Serializable {
         }
     }
 
-   
     public void vFechas(FacesContext contexto, UIComponent obp, Object valorc) {
         try {
 
@@ -225,8 +252,23 @@ public class ADReserva implements Serializable {
         }
     }
 
-    
-        
+    //gestión de páginas
+    public void gestion(int ng) {
+
+        for (int n = 0; n < 3; n++) {
+            if (n == ng) {
+                gestion[ng] = "true";
+            } else {
+                gestion[n] = "false";
+            }
+
+        }
+    }
+
+    public String getGestion(int ng) {
+        return gestion[ng];
+    }
+
     public ADReserva() {
         creaReserva();
     }

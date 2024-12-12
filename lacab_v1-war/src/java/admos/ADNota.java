@@ -4,6 +4,7 @@
  */
 package admos;
 
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -63,6 +64,8 @@ public class ADNota implements Serializable {
         return mDNota.notas();
     }
 
+    /*
+
     public void registroNota(Reservacion reserva) {
         FacesContext contexto = FacesContext.getCurrentInstance();
         // reserva = aDReserva.getReserva(); 
@@ -98,6 +101,56 @@ public class ADNota implements Serializable {
         contexto.addMessage(null, msj);
         System.out.println("Nota generada correctamente para la reservación: " + reserva.getNumReserva());
         //  creaNota(); 
+    }
+     */
+    public void registroNota(Reservacion reserva) {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+
+        if (reserva == null) {
+            System.out.println("Error: No hay una reservación activa para generar la nota.");
+            return;
+        }
+
+        Nota notaExistente = mDNota.buscarNota(reserva);
+
+        if (notaExistente != null) {
+            // si ya hay entonces vamos a verla
+            try {
+                contexto.getExternalContext().redirect("nota.xhtml?reserva=" + reserva.getNumReserva());
+            } catch (IOException e) {
+                System.err.println("Error al redirigir a la página de visualización: " + e.getMessage());
+            }
+            return;
+        }
+
+        // si no existe, crear y guardar una nueva nota
+        nota = new Nota();
+        nota.setNumReserva(reserva);
+        nota.setFechaEmision(new Date());
+
+        LocalDate fechaLlegada = reserva.getFechaLlegada().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fechaSalida = reserva.getFechaSalida().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        long diasEstancia = ChronoUnit.DAYS.between(fechaLlegada, fechaSalida);
+        System.out.println("Días de estancia: " + diasEstancia);
+
+        List<DetalleReservacion> detalles = aDDetalle.getDetalles(reserva);
+        long importeTotal = 0;
+
+        for (DetalleReservacion detalle : detalles) {
+            Habitacion habitacion = detalle.getNumHab();
+            if (habitacion != null) {
+                importeTotal += habitacion.getTarifa() * diasEstancia;
+            }
+        }
+
+        nota.setImporteTotal(importeTotal);
+
+        mDNota.generarNota(nota);
+        notaGenerada = true;
+        FacesMessage msj = new FacesMessage("Nota generada correctamente.");
+        contexto.addMessage(null, msj);
+        System.out.println("Nota generada para la reservación: " + reserva.getNumReserva());
     }
 
     public void cargarNota(Reservacion reservacion) {

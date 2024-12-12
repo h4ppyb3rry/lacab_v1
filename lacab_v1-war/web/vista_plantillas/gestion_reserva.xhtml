@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../resources/formulario.xhtml">
+
+            <ui:define name="left">
+
+                <h:panelGrid columns="1" width="100%">
+                    <f:view>
+                        <h:form>
+                            <h:commandButton value="ACTIVAS" actionListener="#{aDReserva.gestion(0)}" styleClass="button-spacing"/>
+                            <h:commandButton value="TOTALES" actionListener="#{aDReserva.gestion(1)}" styleClass="button-spacing"/>
+                        </h:form>
+
+                    </f:view>
+                </h:panelGrid>
+
+
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form rendered="#{aDReserva.getGestion(0)}">
+                        <p:commandButton value="+ Nueva Reserva" action="#{aDReserva.nuevaReserva()}" ajax="false" />
+                        <p:growl id="mensaje" life="5000"/>  
+                        <h1><h:outputText value="Reservas Activas"/></h1>
+                        <h:outputText value="Reservas totales: #{aDReserva.activas.size()}" />
+                        <p:dataTable value="#{aDReserva.activas}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="NumReserva"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numReserva}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Huésped titular"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numHuesped.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Habitaciones"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numHabitaciones}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Llegada"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fechaLlegada}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Salida"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fechaSalida}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Acciones"/>
+                                </f:facet>
+
+                                <p:commandButton value="NOTA" action="#{aDNota.registroNota(item)}" ajax="false" update="mensaje btnfin" />
+                                <p:commandButton id="btnfin" value="FINALIZAR" action="#{aDReserva.finalizarReserva(item)}" ajax="false" disabled="#{!aDNota.isNotaGenerada(item)}" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+
+
+                <f:view>
+                    <h:form rendered="#{aDReserva.getGestion(1)}">
+
+                        <p:growl id="mensaje" life="5000"/>  
+                        <h1><h:outputText value="Reservas Totales"/></h1>
+                        <h:outputText value="Reservas totales: #{aDReserva.reservaciones.size()}" />
+                        <p:dataTable value="#{aDReserva.reservaciones}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="NumReserva"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numReserva}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Huésped titular"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numHuesped.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Habitaciones"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numHabitaciones}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Llegada"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fechaLlegada}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Salida"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fechaSalida}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Estado"/>
+                                </f:facet>
+                                <h:outputText value="#{item.estado}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Acciones"/>
+                                </f:facet>
+                                <p:link value="NOTA" outcome="nota.xhtml"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

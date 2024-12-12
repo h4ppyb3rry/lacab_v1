@@ -148,8 +148,8 @@ public class ADDetalle implements Serializable {
     public void registroReserva() {
         FacesContext contexto = FacesContext.getCurrentInstance();
         reserva = aDReserva.getReserva();
-
-        if (reserva != null) {
+        if (listaDetalles.size() == reserva.getNumHabitaciones()) {
+            if (reserva != null) {
             for (DetalleReservacion d : listaDetalles) {
                 d.setNumReserva(reserva);
                 mDDetalles.insertarDetalle(d);
@@ -167,7 +167,7 @@ public class ADDetalle implements Serializable {
             nuevoDetalle();
 
             try {
-                contexto.getExternalContext().redirect("conf_reserva.xhtml");
+                contexto.getExternalContext().redirect("confirmacion.xhtml");
             } catch (IOException e) {
                 FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "Error al redirigir a la página de confirmación.", null);
@@ -178,7 +178,14 @@ public class ADDetalle implements Serializable {
             FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Error: No se puede registrar detalles sin una reserva activa.", null);
             contexto.addMessage(null, mensaje);
+        } 
+        } else{
+             FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "No puedes registrar menos habitaciones de las designadas.", null);
+            contexto.addMessage(null, mensaje);
         }
+
+        
     }
     
     

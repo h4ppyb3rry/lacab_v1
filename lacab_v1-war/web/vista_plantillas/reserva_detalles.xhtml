@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../resources/navbar_simple.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+            <h1>Detalles de Reservación</h1>
+            <p:growl id="mensaje" life="5000"/>  
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Número de Reservación:" for="numReserva" />
+                <h:outputText id="numReserva" value="#{aDReserva.reserva.numReserva}" />
+                <p:outputLabel value="Número de Habitaciones:" for="cantHab" />
+                <h:outputText id="cantHab" value="#{aDReserva.reserva.numHabitaciones}" />
+            </p:panelGrid>
+
+            <h2>Agregar Habitaciones</h2>
+            <p:panelGrid columns="3">
+                <p:outputLabel value="Seleccionar Habitación:" for="habitaciones" />
+                <p:selectOneMenu id="habitaciones" value="#{aDDetalle.detalle.numHab}" converter="#{habitacionConverter}">
+                    <f:selectItems value="#{aDHabitacion.disponibles}" var="hab" 
+                                   itemLabel="#{hab.numHab}" itemValue="#{hab}" />
+                    <p:tooltip for="@this" value="Camas: #{hab.numCamas}, Capacidad: #{hab.capacidad} persona(s)" />
+                </p:selectOneMenu>
+                <p:commandButton value="Agregar" ajax="false" action="#{aDDetalle.agregarHabitacion}" update="mensaje tablaDetalles"/>
+            </p:panelGrid>
+
+            <h2>Habitaciones Seleccionadas</h2>
+            <p:dataTable id="tablaDetalles" value="#{aDDetalle.listaDetalles}" var="detalle" editable="true">
+                <p:column headerText="No. Habitación">
+                    <h:outputText value="#{detalle.numHab.numHab}" />
+                </p:column>
+                 <p:column headerText="No. camas">
+                     <h:outputText value="#{detalle.numHab.numCamas}" />
+                </p:column>
+                 <p:column headerText="Capacidad">
+                     <h:outputText value="#{detalle.numHab.capacidad} persona(s)" />
+                </p:column>
+                <p:column headerText="Piso">
+                     <h:outputText value="#{detalle.numHab.piso}" />
+                </p:column>
+                 <p:column headerText="Tarifa">
+                     <h:outputText value="$#{detalle.numHab.tarifa}.00" />
+                </p:column>
+                <p:column headerText="Acciones">
+                    <p:commandButton value="Eliminar" action="#{aDDetalle.eliminarDetalle(detalle)}" update="tablaDetalles" />
+                </p:column>
+            </p:dataTable>
+
+            <p:commandButton value="Guardar Reservación" action="#{aDDetalle.registroReserva}" ajax="false" />
+        </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
