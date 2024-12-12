@@ -12,6 +12,7 @@
 
             <h:form>
                 <p:commandButton value="+ Nueva Reserva" action="#{aDReserva.nuevaReserva()}" ajax="false" />
+                <p:growl id="mensaje" life="5000"/>  
                 <h1><h:outputText value="Reservas Activas"/></h1>
                 <p:dataTable value="#{aDReserva.activas}" var="item">
                     <p:column>
@@ -45,18 +46,19 @@
                             <h:outputText value="Salida"/>
                         </f:facet>
                         <h:outputText value="#{item.fechaSalida}">
-                           <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
                         </h:outputText>
                     </p:column>
-                     <p:column>
+                    <p:column>
                         <f:facet name="header">
                             <h:outputText value="Acciones"/>
                         </f:facet>
-                         <p:commandButton value="FINALIZAR" action="#{aDReserva.finalizarReserva(item)}" ajax="false" />
-                         <p:commandButton value="NOTA" action="#{aDNota.registroNota(item)}" ajax="false" />
+
+                        <p:commandButton value="NOTA" action="#{aDNota.registroNota(item)}" ajax="false" update="mensaje btnfin"/>
+                        <p:commandButton id="btnfin" value="FINALIZAR" action="#{aDReserva.finalizarReserva(item)}" ajax="false" disabled="#{!aDNota.isNotaGenerada(item)}" />
                     </p:column>
-                    
-                    
+
+
                 </p:dataTable>
             </h:form>
         </f:view>

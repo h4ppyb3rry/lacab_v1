@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import modelo.Nota;
+import modelo.Reservacion;
 
 /**
  *
@@ -28,6 +29,10 @@ public class MDNota {
 
     public List<Nota> notas() {
         return notaF.findAll();
+    }
+    
+    public Nota buscarNota(Reservacion r) {
+        return notaF.notaReserva(r);
     }
     
 

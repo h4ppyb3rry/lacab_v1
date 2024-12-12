@@ -7,11 +7,9 @@ package admos;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +18,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import manipuladatos.MDNota;
 import manipuladatos.MDReserva;
@@ -100,7 +97,7 @@ public class ADReserva implements Serializable {
         return mDReserva.reservasActivas();
     }
 
-    public void finalizarReserva(Reservacion reserva) {
+    public String finalizarReserva(Reservacion reserva) {
         if (reserva != null) {
             reserva.setEstado("FINALIZADA");
 
@@ -119,8 +116,10 @@ public class ADReserva implements Serializable {
             mDReserva.actualizarReserva(reserva);
 
             System.out.println("Reservación " + reserva.getNumReserva() + " ha sido finalizada.");
+             return "nota_generada.xhtml?faces-redirect=true"; 
         } else {
             System.out.println("Error");
+             return null;
         }
     }
 
