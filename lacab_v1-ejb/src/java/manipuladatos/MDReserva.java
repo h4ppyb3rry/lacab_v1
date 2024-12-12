@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import modelo.DetalleReservacion;
+import modelo.Huesped;
 import modelo.Reservacion;
 
 /**
@@ -40,5 +41,10 @@ public class MDReserva {
      }
 
     
-  
+  public int visitasTotales(Huesped h) {
+    if (h == null || h.getNumHuesped()== null) {
+        return 0; 
+    }
+    return reservacionF.totalVisitas(h);
+}
 }

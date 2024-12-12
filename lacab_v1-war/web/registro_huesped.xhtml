@@ -9,6 +9,7 @@
     </h:head>
     <h:body>
         <f:view>
+             <p:growl id="mensaje" life="5000"/>  
             <h:form>
                 <h1><h:outputText value="Registro de Huéspedes"/></h1>
                 <p:panelGrid columns="2">
@@ -23,7 +24,7 @@
                     <p:outputLabel value="Nacionalidad:" for="nacionalidad" />
                     <p:inputText id="nacionalidad" value="#{aDHuesped.huesped.nacionalidad}" title="Nacionalidad" />
                 </p:panelGrid>
-                <p:commandButton value="REGISTRAR" actionListener="#{aDHuesped.registroHuesped()}" ajax="false"/>
+                <p:commandButton value="REGISTRAR" actionListener="#{aDHuesped.registroHuesped()}" ajax="false" update="mensaje"/>
             </h:form>
         </f:view>
     </h:body>

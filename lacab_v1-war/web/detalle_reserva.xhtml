@@ -22,15 +22,29 @@
             <p:panelGrid columns="3">
                 <p:outputLabel value="Seleccionar Habitación:" for="habitaciones" />
                 <p:selectOneMenu id="habitaciones" value="#{aDDetalle.detalle.numHab}" converter="#{habitacionConverter}">
-                    <f:selectItems value="#{aDHabitacion.disponibles}" var="hab" itemLabel="#{hab.numHab}" itemValue="#{hab}" />
+                    <f:selectItems value="#{aDHabitacion.disponibles}" var="hab" 
+                                   itemLabel="#{hab.numHab}" itemValue="#{hab}" />
+                    <p:tooltip for="@this" value="Camas: #{hab.numCamas}, Capacidad: #{hab.capacidad} persona(s)" />
                 </p:selectOneMenu>
                 <p:commandButton value="Agregar" ajax="false" action="#{aDDetalle.agregarHabitacion}" update="mensaje tablaDetalles"/>
             </p:panelGrid>
 
             <h2>Habitaciones Seleccionadas</h2>
             <p:dataTable id="tablaDetalles" value="#{aDDetalle.listaDetalles}" var="detalle" editable="true">
-                <p:column headerText="Habitación">
+                <p:column headerText="No. Habitación">
                     <h:outputText value="#{detalle.numHab.numHab}" />
+                </p:column>
+                 <p:column headerText="No. camas">
+                     <h:outputText value="#{detalle.numHab.numCamas}" />
+                </p:column>
+                 <p:column headerText="Capacidad">
+                     <h:outputText value="#{detalle.numHab.capacidad} persona(s)" />
+                </p:column>
+                <p:column headerText="Piso">
+                     <h:outputText value="#{detalle.numHab.piso}" />
+                </p:column>
+                 <p:column headerText="Tarifa">
+                     <h:outputText value="$#{detalle.numHab.tarifa}.00" />
                 </p:column>
                 <p:column headerText="Acciones">
                     <p:commandButton value="Eliminar" action="#{aDDetalle.eliminarDetalle(detalle)}" update="tablaDetalles" />

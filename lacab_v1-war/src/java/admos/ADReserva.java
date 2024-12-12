@@ -9,6 +9,9 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
@@ -17,11 +20,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
+import manipuladatos.MDNota;
 import manipuladatos.MDReserva;
 import modelo.DetalleReservacion;
 import modelo.Habitacion;
 import modelo.Huesped;
+import modelo.Nota;
 import modelo.Reservacion;
 
 /**
@@ -33,19 +39,22 @@ import modelo.Reservacion;
 public class ADReserva implements Serializable {
 
     @EJB
+    private MDNota mDNota;
+
+    @EJB
     private MDReserva mDReserva;
+
     private Reservacion reserva;
     private Huesped numHuesped;
     private List<DetalleReservacion> listaDetalles;
+    private Nota nota;
+    private Habitacion habSelec;
 
     @Inject
     private ADHabitacion aDHabitacion;
 
     @Inject
     private ADDetalle aDDetalle;
-    
-    @Inject
-    private ADNota aDNota;
 
     public Huesped getNumHuesped() {
         return numHuesped;
@@ -91,16 +100,14 @@ public class ADReserva implements Serializable {
         return mDReserva.reservasActivas();
     }
 
-    
-    
     public void finalizarReserva(Reservacion reserva) {
         if (reserva != null) {
             reserva.setEstado("FINALIZADA");
-            
-           // reserva.setFechaSalida(new Date());
 
-            // cambiar el estado 
+            // reserva.setFechaSalida(new Date());
+           // registroNota(reserva);
             List<DetalleReservacion> detalles = aDDetalle.getDetalles(reserva);
+            // cambiar el estado 
             for (DetalleReservacion detalle : detalles) {
                 Habitacion habitacion = detalle.getNumHab();
                 if (habitacion != null) {
@@ -110,25 +117,117 @@ public class ADReserva implements Serializable {
                 }
             }
             mDReserva.actualizarReserva(reserva);
-            
+
             System.out.println("Reservación " + reserva.getNumReserva() + " ha sido finalizada.");
         } else {
             System.out.println("Error");
         }
     }
-    
+
+    /*public void registroNota(Reservacion reserva) {
+        //reserva = aDReserva.getReserva(); 
+        if (reserva == null) {
+            System.out.println("Error: No hay una reservación activa para generar la nota.");
+            return;
+        }
+
+        nota = new Nota();
+        nota.setNumReserva(reserva);
+        nota.setFechaEmision(new Date());
+
+        LocalDate fechaLlegada = reserva.getFechaLlegada().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fechaSalida = reserva.getFechaSalida().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        long diasEstancia = ChronoUnit.DAYS.between(fechaLlegada, fechaSalida);
+        System.out.println("dias" + diasEstancia);
+
+        List<DetalleReservacion> detalles2 = aDDetalle.getDetalles(reserva);
+        long importeTotal = 0;
+
+        for (DetalleReservacion detalle : detalles2) {
+            Habitacion habitacion = detalle.getNumHab();
+            if (habitacion != null) {
+                importeTotal += habitacion.getTarifa() * diasEstancia;
+            }
+        }
+
+        nota.setImporteTotal(Math.abs(importeTotal));
+
+        mDNota.generarNota(nota);
+
+        System.out.println("Nota generada correctamente para la reservación: " + reserva.getNumReserva());
+        //  creaNota(); 
+    }*/
+
     public void actualizarReserva() {
         FacesContext contexto = FacesContext.getCurrentInstance();
         if (reserva != null) {
             mDReserva.actualizarReserva(reserva);
-             FacesMessage msj = new FacesMessage("¡Valor actualizado!");
+            FacesMessage msj = new FacesMessage("¡Valor actualizado!");
             contexto.addMessage(null, msj);
         }
     }
+
+    public String nuevaReserva() {
+        creaReserva();
+        return "nueva_reserva.xhtml?faces-redirect=true";
+    }
     
+     public List<Habitacion> hDisponibles() {
+        return aDHabitacion.getDisponibles();
+    }
+     
+     
+     public int visitasTotales(Huesped h){
+         return mDReserva.visitasTotales(h);
+    
+}
 
+    //validaciones
+    public void vHab(FacesContext contexto, UIComponent obp, Object valorc) {
+        int datovc = (int) valorc;
+        UIInput ciu = (UIInput) obp;
+        int hdispo = hDisponibles().size();
 
+        if (datovc > hdispo) {
+            ciu.setValid(false);
+            FacesMessage msj = new FacesMessage("Solo hay " + hdispo + " habitaciones disponibles");
+            contexto.addMessage(obp.getClientId(contexto), msj);
+        }
+    }
 
+   
+    public void vFechas(FacesContext contexto, UIComponent obp, Object valorc) {
+        try {
+
+            Date datovc = (Date) valorc;
+            LocalDate fechaL = datovc.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            UIInput fechaSalida = (UIInput) contexto.getViewRoot().findComponent("formId:fechaSalida");
+            Object valorF = fechaSalida.getSubmittedValue();
+
+            if (valorF != null) {
+                String valorFString = valorF.toString();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Date fechaS = sdf.parse(valorFString);
+
+                LocalDate fechaS1 = fechaS.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                if (fechaL.isAfter(fechaS1)) {
+                    ((UIInput) obp).setValid(false);
+                    FacesMessage msj = new FacesMessage("La fecha de llegada no puede ser posterior a la de salida.");
+                    contexto.addMessage(obp.getClientId(contexto), msj);
+                }
+            }
+        } catch (Exception e) {
+
+            FacesMessage errorMsg = new FacesMessage("Error al validar las fechas: " + e.getMessage());
+            contexto.addMessage(obp.getClientId(contexto), errorMsg);
+        }
+    }
+
+    
+        
     public ADReserva() {
         creaReserva();
     }

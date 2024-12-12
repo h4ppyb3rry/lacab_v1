@@ -12,17 +12,18 @@
             <p:growl id="mensaje"/>
             <h:form id="formId">
                 <h1><h:outputText value="Nueva Reserva"/></h1>
+                <h:outputText value="Habitaciones disponibles: #{aDHabitacion.disponibles.size()}"/>
                 <p:panelGrid columns="2">
                     <p:outputLabel value="Número de habitaciones" for="numHabitaciones" />
-                    <p:inputText id="numHabitaciones" value="#{aDReserva.reserva.numHabitaciones}" title="NumHabitaciones" required="true" requiredMessage="The NumHabitaciones field is required."/>
+                    <p:inputText id="numHabitaciones" value="#{aDReserva.reserva.numHabitaciones}" title="NumHabitaciones" required="true" requiredMessage="The NumHabitaciones field is required." validator="#{aDReserva.vHab}"/>
                     <p:outputLabel value="Número de personas" for="numPersonas" />
                     <p:inputText id="numPersonas" value="#{aDReserva.reserva.numPersonas}" title="NumPersonas" required="true" requiredMessage="The NumPersonas field is required."/>
                     <p:outputLabel value="Fecha de llegada:" for="fechaLlegada" />
-                    <p:inputText id="fechaLlegada" value="#{aDReserva.reserva.fechaLlegada}" title="FechaLlegada" required="true" requiredMessage="The FechaLlegada field is required.">
+                    <p:inputText id="fechaLlegada" value="#{aDReserva.reserva.fechaLlegada}" title="FechaLlegada" required="true" requiredMessage="The FechaLlegada field is required." validator="#{aDReserva.vFechas}">
                       <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
                     </p:inputText>
                     <p:outputLabel value="Fecha de salida:" for="fechaSalida" />
-                    <p:inputText id="fechaSalida" value="#{aDReserva.reserva.fechaSalida}" title="FechaSalida" >
+                    <p:inputText id="fechaSalida" value="#{aDReserva.reserva.fechaSalida}" title="FechaSalida" required="true"  >
                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
                     </p:inputText>
                     <p:outputLabel value="Deposito inicial:" for="deposito" />

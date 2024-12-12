@@ -9,6 +9,8 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import manipuladatos.MDHuesped;
 import modelo.Huesped;
 
@@ -34,7 +36,10 @@ public class ADHuesped implements Serializable {
     }
 
     public void registroHuesped() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         mDHuesped.insertarHuesped(huesped);
+         FacesMessage msj = new FacesMessage("Registro exitoso.");
+            contexto.addMessage(null, msj);
         creaHuesped();
     }
 

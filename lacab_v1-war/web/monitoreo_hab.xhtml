@@ -13,10 +13,16 @@
 
             <h:form>
                 <h1><h:outputText value="Monitoreo de habitaciones"/></h1>
+                <p:panelGrid columns="3">
+                    <h:outputText value="Disponibles: #{aDHabitacion.disponibles.size()}"/>
+                    <h:outputText value="En mantenimiento: #{aDHabitacion.mantenimiento.size()}"/>
+                    <h:outputText value="Ocupadas: #{aDHabitacion.ocupadas.size()}"/>
+                </p:panelGrid>
+                <br></br>
                 <p:dataTable value="#{aDHabitacion.habitaciones}" var="item">
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="No. Habitación"/>
+                            <h:outputText value="No. habitación"/>
                         </f:facet>
                         <h:outputText value="#{item.numHab}"/>
                     </p:column>
@@ -24,17 +30,17 @@
                         <f:facet name="header">
                             <h:outputText value="Tarifa"/>
                         </f:facet>
-                        <h:outputText value="#{item.tarifa}"/>
+                        <h:outputText value="$#{item.tarifa}.00"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Capacidad"/>
                         </f:facet>
-                        <h:outputText value="#{item.capacidad}"/>
+                        <h:outputText value="#{item.capacidad} persona(s)"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="No. Camas"/>
+                            <h:outputText value="No. camas"/>
                         </f:facet>
                         <h:outputText value="#{item.numCamas}"/>
                     </p:column>

@@ -18,11 +18,20 @@
 
             <h2>Habitaciones Seleccionadas</h2>
             <p:dataTable value="#{aDDetalle.getDetalles(aDReserva.reserva)}" var="detalle" >
-                <p:column headerText="Número de Habitación">
+                 <p:column headerText="No. Habitación">
                     <h:outputText value="#{detalle.numHab.numHab}" />
                 </p:column>
-                <p:column headerText="Tarifa">
-                    <h:outputText value="#{detalle.numHab.tarifa}" />
+                 <p:column headerText="No. camas">
+                     <h:outputText value="#{detalle.numHab.numCamas}" />
+                </p:column>
+                 <p:column headerText="Capacidad">
+                     <h:outputText value="#{detalle.numHab.capacidad} persona(s)" />
+                </p:column>
+                <p:column headerText="Piso">
+                     <h:outputText value="#{detalle.numHab.piso}" />
+                </p:column>
+                 <p:column headerText="Tarifa">
+                     <h:outputText value="$#{detalle.numHab.tarifa}.00" />
                 </p:column>
             </p:dataTable>
 

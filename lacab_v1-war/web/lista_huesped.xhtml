@@ -11,7 +11,7 @@
         <f:view>
 
             <h:form>
-                
+
                 <h1><h:outputText value="Huéspedes Registrados"/></h1>
                 <p:dataTable value="#{aDHuesped.huespedes}" var="item">
                     <p:column>
@@ -22,7 +22,7 @@
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Ocupacion"/>
+                            <h:outputText value="Ocupación"/>
                         </f:facet>
                         <h:outputText value="#{item.ocupacion}"/>
                     </p:column>
@@ -43,6 +43,12 @@
                             <h:outputText value="Nacionalidad"/>
                         </f:facet>
                         <h:outputText value="#{item.nacionalidad}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="No. visitas"/>
+                        </f:facet>
+                        <h:outputText value="#{aDReserva.visitasTotales(item)}"/>
                     </p:column>
                 </p:dataTable>
             </h:form>
