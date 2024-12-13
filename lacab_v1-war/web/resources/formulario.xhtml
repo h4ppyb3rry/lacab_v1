@@ -52,6 +52,10 @@
             margin: 0px 0px 10px 0px;
         }
 
+        #top a{
+            padding-right: 5px;
+        }
+
         #bottom {
             background-color: #c2dfef;
             padding: 10px;
@@ -84,20 +88,23 @@
         }
 
         #top a:link:hover, #top a:visited:hover  {
-            color: black;
+            color: yellow;
             font-weight : bold;
-            text-decoration : underline;
+            text-decoration : none;
+        }
+        .button-spacing {
+            margin-bottom: 5px;
         }
 
     </style>
     <h:body>
         <table cellspacing="10px">
             <tr>
-                <td id="top" colspan="2">
+                <td id="top" colspan="2" align="Center">
                     <ui:insert name="top">
-                        <p:link value="Reservas" outcome="gestion_reserva.xhtml" />
-                        <p:link value="Huéspedes" outcome="huespedes.xhtml" />
-                        <p:link value="Habitaciones" outcome="gestion_habitacion.xhtml" />
+                        <p:link value="RESERVAS" outcome="gestion_reserva.xhtml" />
+                        <p:link value="HUÉSPEDES" outcome="huespedes.xhtml" />
+                        <p:link value="HABITACIONES" outcome="gestion_habitacion.xhtml" />
                     </ui:insert>
                 </td>
             </tr>
@@ -105,12 +112,12 @@
                 <td id="left">
                     <ui:insert name="left"></ui:insert>
                 </td>
-                <td id="content">
+                <td id="content" >
                     <ui:insert name="content"></ui:insert>
                 </td>
             </tr>
             <tr>
-                <td id="bottom" colspan="2">
+                <td id="bottom" colspan="2" align="Center">
                     <ui:insert name="bottom">LA CABAÑA SA. DE SV.</ui:insert>
                 </td>
             </tr>

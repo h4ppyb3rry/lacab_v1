@@ -16,6 +16,7 @@
             <h:form>
 
                 <h1><h:outputText value="Huéspedes Registrados"/></h1>
+                <br></br>
                 <p:commandButton value="+ Nuevo Huésped" action="#{aDHuesped.nuevoHuesped()}" ajax="false" />
                 <p:dataTable value="#{aDHuesped.huespedes}" var="item">
                     <p:column>
