@@ -33,5 +33,9 @@ public class MDHuesped {
     public Huesped buscarHuespedPorId(Integer id) {
         return huespedF.find(id);
     }
+    
+    public Huesped nombreH(Huesped h) {
+        return huespedF.nombrePersona(h.getNombre());
+    }
 
 }

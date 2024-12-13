@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import manipuladatos.MDHuesped;
 import modelo.Huesped;
@@ -39,12 +40,29 @@ public class ADHuesped implements Serializable {
         return mDHuesped.huespedes();
     }
 
+    /*
     public void registroHuesped() {
         FacesContext contexto = FacesContext.getCurrentInstance();
         mDHuesped.insertarHuesped(huesped);
         FacesMessage msj = new FacesMessage("Registro exitoso.");
         contexto.addMessage(null, msj);
         creaHuesped();
+    }
+     */
+
+    public void registroHuesped() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+
+        if (nombreRegistrado()) {
+            FacesMessage msj = new FacesMessage("El nombre ya está registrado.");
+            contexto.addMessage(null, msj);
+        } else {
+
+            mDHuesped.insertarHuesped(huesped);
+            FacesMessage msj = new FacesMessage("Registro exitoso.");
+            contexto.addMessage(null, msj);
+            creaHuesped();
+        }
     }
 
     public Huesped getHuesped() {
@@ -63,7 +81,9 @@ public class ADHuesped implements Serializable {
     //validador
     public void vLetras(FacesContext contexto, UIComponent obp, Object value) {
         String input = (String) value;
+        UIInput ciu = (UIInput) obp;
         if (input != null && !LETRAS_PATTERN.matcher(input).matches()) {
+            ciu.setValid(false);
             FacesMessage msj = new FacesMessage("Solo puedes ingresar letras.");
             contexto.addMessage(obp.getClientId(contexto), msj);
         }
@@ -77,6 +97,10 @@ public class ADHuesped implements Serializable {
             }
         }
         return filteredHuespedes;
+    }
+
+    public boolean nombreRegistrado() {
+        return mDHuesped.nombreH(huesped) != null;
     }
 
     public ADHuesped() {
