@@ -15,8 +15,8 @@
                     <f:view>
                         <h:form>
                             <p:commandButton value="MONITOREO" actionListener="#{aDHabitacion.gestion(0)}" styleClass="button-spacing" ajax="false"/>
-                            <p:commandButton value="MANTENIMIENTO" actionListener="#{aDHabitacion.gestion(1)}" styleClass="button-spacing" ajax="false"/>
-                         <p:commandButton value="REPORTES" actionListener="#{aDHabitacion.gestion(2)}" styleClass="button-spacing" ajax="false"/>
+                            <p:commandButton value="REPORTES" actionListener="#{aDHabitacion.gestion(1)}" styleClass="button-spacing" ajax="false"/>
+                         <p:commandButton value="HISTORIAL" actionListener="#{aDHabitacion.gestion(2)}" styleClass="button-spacing" ajax="false"/>
                         </h:form>
                     </f:view>
                 </h:panelGrid>
@@ -137,12 +137,12 @@
                     
                     <h:form rendered="#{aDHabitacion.getGestion(2)}">
                         <p:growl id="mensaje" life="5000"/>  
-                        <h1><h:outputText value="Reportes Activos"/></h1>
+                        <h1><h:outputText value="Historial de Mantenimiento"/></h1>
 
                         <p:commandButton value="+ Nuevo Reporte" action="#{aDMantenimiento.nReporte()}" ajax="false" />
                         <br></br> 
                         <br></br> 
-                        <h:outputText value="Reportes de mantenimiento: #{aDMantenimiento.reportesM.size()}" />
+                        <h:outputText value="Reportes generados: #{aDMantenimiento.reportesM.size()}" />
 
                         <p:dataTable value="#{aDMantenimiento.reportesM}" var="item">
                             <p:column>
