@@ -9,18 +9,15 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import manipuladatos.MDNota;
-import manipuladatos.MDReserva;
 import modelo.DetalleReservacion;
 import modelo.Habitacion;
 import modelo.Nota;
@@ -151,15 +148,17 @@ public class ADNota implements Serializable {
         FacesMessage msj = new FacesMessage("Nota generada correctamente.");
         contexto.addMessage(null, msj);
         System.out.println("Nota generada para la reservación: " + reserva.getNumReserva());
+        //creaNota();
     }
 
-    public void cargarNota(Reservacion reservacion) {
+    public String cargarNota(Reservacion reservacion) {
         nota = mDNota.buscarNota(reservacion);
         if (nota == null) {
             FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_WARN,
                     "No se encontró una nota para esta reservación", null);
             FacesContext.getCurrentInstance().addMessage(null, mensaje);
         }
+        return "nota.xhtml?faces-redirect=true"; 
 
     }
 

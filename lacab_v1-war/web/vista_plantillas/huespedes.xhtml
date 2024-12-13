@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../resources/navbar_simple.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+
+            <h:form>
+
+                <h1><h:outputText value="Huéspedes Registrados"/></h1>
+                <p:commandButton value="+ Nuevo Huésped" action="#{aDHuesped.nuevoHuesped()}" ajax="false" />
+                <p:dataTable value="#{aDHuesped.huespedes}" var="item">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ocupación"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ocupacion}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Residencia"/>
+                        </f:facet>
+                        <h:outputText value="#{item.residencia}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Domicilio"/>
+                        </f:facet>
+                        <h:outputText value="#{item.domicilio}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nacionalidad"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nacionalidad}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="No. visitas"/>
+                        </f:facet>
+                        <h:outputText value="#{aDReserva.visitasTotales(item)}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -51,6 +51,11 @@ public class ADHuesped implements Serializable {
         this.huesped = huesped;
     }
     
+    public String nuevoHuesped() {
+        creaHuesped();
+        return "registroh.xhtml?faces-redirect=true";
+    }
+    
     public ADHuesped() {
         creaHuesped();
     }

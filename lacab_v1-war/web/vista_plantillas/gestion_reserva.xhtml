@@ -132,7 +132,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Acciones"/>
                                 </f:facet>
-                                <p:link value="NOTA" outcome="nota.xhtml"/>
+                                <p:commandButton value="NOTA" action="#{aDNota.cargarNota(item)}" ajax="false" update="mensaje btnfin" />
                             </p:column>
                         </p:dataTable>
                     </h:form>
