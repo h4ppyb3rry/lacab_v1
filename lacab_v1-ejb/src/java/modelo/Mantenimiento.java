@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Mantenimiento.findByNumReporte", query = "SELECT m FROM Mantenimiento m WHERE m.numReporte = :numReporte"),
     @NamedQuery(name = "Mantenimiento.findByDescripcion", query = "SELECT m FROM Mantenimiento m WHERE m.descripcion = :descripcion"),
     @NamedQuery(name = "Mantenimiento.findByFecha", query = "SELECT m FROM Mantenimiento m WHERE m.fecha = :fecha"),
-    @NamedQuery(name = "Mantenimiento.findByResponsable", query = "SELECT m FROM Mantenimiento m WHERE m.responsable = :responsable")})
+    @NamedQuery(name = "Mantenimiento.findByResponsable", query = "SELECT m FROM Mantenimiento m WHERE m.responsable = :responsable"),
+    @NamedQuery(name = "Mantenimiento.findByEstado", query = "SELECT m FROM Mantenimiento m WHERE m.estado = :estado")})
 public class Mantenimiento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,6 +58,11 @@ public class Mantenimiento implements Serializable {
     @Size(max = 255)
     @Column(name = "responsable")
     private String responsable;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "estado")
+    private String estado;
     @JoinColumn(name = "numHab", referencedColumnName = "numHab")
     @ManyToOne(optional = false)
     private Habitacion numHab;
@@ -68,10 +74,11 @@ public class Mantenimiento implements Serializable {
         this.numReporte = numReporte;
     }
 
-    public Mantenimiento(Integer numReporte, String descripcion, Date fecha) {
+    public Mantenimiento(Integer numReporte, String descripcion, Date fecha, String estado) {
         this.numReporte = numReporte;
         this.descripcion = descripcion;
         this.fecha = fecha;
+        this.estado = estado;
     }
 
     public Integer getNumReporte() {
@@ -104,6 +111,14 @@ public class Mantenimiento implements Serializable {
 
     public void setResponsable(String responsable) {
         this.responsable = responsable;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Habitacion getNumHab() {

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../resources/navbar_simple.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+                    <p:growl id="mensaje"/>
+                    <h:form id="formId">
+
+                        <h1><h:outputText value="Nuevo Reporte"/></h1>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Seleccionar Habitación:" for="habitaciones" />
+                            <p:selectOneMenu id="habitaciones" value="#{aDMantenimiento.reporteM.numHab}" converter="#{habitacionConverter}">
+                                <f:selectItems value="#{aDHabitacion.habitaciones}" var="hab" 
+                                               itemLabel="#{hab.numHab}" itemValue="#{hab}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Descripción" for="descripcion" />
+                            <p:inputTextarea id="descripcion" value="#{aDMantenimiento.reporteM.descripcion}" title="Descripcion" required="true" requiredMessage="Ingresa la descripción."/>
+                            <p:outputLabel value="Responsable del Mantenimiento" for="responsable" />
+                            <p:inputText id="responsable" value="#{aDMantenimiento.reporteM.responsable}" title="Responsable" required="true" requiredMessage="Ingresa el nombre del responsable."/>
+
+                        </p:panelGrid> 
+
+                        <p:commandButton value="GENERAR REPORTE" action="#{aDMantenimiento.nuevoReporte}" ajax="false" update="mensaje"/>
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
