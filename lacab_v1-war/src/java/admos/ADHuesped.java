@@ -7,13 +7,13 @@ package admos;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import manipuladatos.MDHuesped;
 import modelo.Huesped;
 
@@ -27,7 +27,7 @@ public class ADHuesped implements Serializable {
 
     @EJB
     private MDHuesped mDHuesped;
-    
+
     private Huesped huesped;
     private static final Pattern LETRAS_PATTERN = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$");
 
@@ -42,8 +42,8 @@ public class ADHuesped implements Serializable {
     public void registroHuesped() {
         FacesContext contexto = FacesContext.getCurrentInstance();
         mDHuesped.insertarHuesped(huesped);
-         FacesMessage msj = new FacesMessage("Registro exitoso.");
-            contexto.addMessage(null, msj);
+        FacesMessage msj = new FacesMessage("Registro exitoso.");
+        contexto.addMessage(null, msj);
         creaHuesped();
     }
 
@@ -54,25 +54,33 @@ public class ADHuesped implements Serializable {
     public void setHuesped(Huesped huesped) {
         this.huesped = huesped;
     }
-    
+
     public String nuevoHuesped() {
         creaHuesped();
         return "registroh.xhtml?faces-redirect=true";
     }
-    
-    
+
     //validador
-    public void vLetras(FacesContext contexto, UIComponent obp, Object value){
+    public void vLetras(FacesContext contexto, UIComponent obp, Object value) {
         String input = (String) value;
         if (input != null && !LETRAS_PATTERN.matcher(input).matches()) {
             FacesMessage msj = new FacesMessage("Solo puedes ingresar letras.");
             contexto.addMessage(obp.getClientId(contexto), msj);
         }
     }
-    
-    
+
+    public List<Huesped> completeHuesped(String query) {
+        List<Huesped> filteredHuespedes = new ArrayList<>();
+        for (Huesped huesped : getHuespedes()) {
+            if (huesped.getNombre().toLowerCase().contains(query.toLowerCase())) {
+                filteredHuespedes.add(huesped);
+            }
+        }
+        return filteredHuespedes;
+    }
+
     public ADHuesped() {
         creaHuesped();
     }
-    
+
 }

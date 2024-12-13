@@ -41,11 +41,15 @@
                         <f:selectItem itemValue="false" itemLabel="No" />
                     </p:selectOneRadio>
 
-                    <p:outputLabel value="Huésped titular:" for="numHuesped" />
-                    <p:selectOneMenu id="numHuesped" value="#{aDReserva.reserva.numHuesped}" converter="#{huespedConverter}" >
-                        <f:selectItems value="#{aDHuesped.huespedes}" var="huesped"
-                                       itemValue="#{huesped}" itemLabel="#{huesped.nombre}" />
-                    </p:selectOneMenu>
+                     <p:outputLabel value="Huésped titular:" for="numHuesped" />
+                            <p:autoComplete id="numHuesped" value="#{aDReserva.reserva.numHuesped}" 
+                                            completeMethod="#{aDHuesped.completeHuesped}" 
+                                            var="huesped"
+                                            itemLabel="#{huesped.nombre}" 
+                                            itemValue="#{huesped}" 
+                                            converter="#{huespedConverter}" 
+                                            required="true" 
+                                            requiredMessage="Debe seleccionar un huésped" />
                 </p:panelGrid> 
 
                 <p:commandButton value="RESERVAR" action="#{aDReserva.registroReserva}" ajax="false" update="mensaje"/>
