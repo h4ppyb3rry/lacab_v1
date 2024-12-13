@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../resources/formulario.xhtml">
+
+            <ui:define name="left">
+                <h:panelGrid columns="1" width="100%">
+                    <f:view>
+                        <h:form>
+                            <h:commandButton value="Monitoreo" actionListener="#{aDHabitacion.gestion(0)}" styleClass="button-spacing"/>
+                            <h:commandButton value="Reporte Mantenimiento" actionListener="#{aDHabitacion.gestion(1)}" styleClass="button-spacing"/>
+                        </h:form>
+                    </f:view>
+                </h:panelGrid>
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form rendered="#{aDHabitacion.getGestion(0)}">
+
+                        <h1><h:outputText value="Monitoreo de habitaciones"/></h1>
+                        <p:panelGrid columns="3">
+                            <h:outputText value="Disponibles: #{aDHabitacion.disponibles.size()}"/>
+                            <h:outputText value="En mantenimiento: #{aDHabitacion.mantenimiento.size()}"/>
+                            <h:outputText value="Ocupadas: #{aDHabitacion.ocupadas.size()}"/>
+                        </p:panelGrid>
+                        <br></br>
+                        <p:dataTable value="#{aDHabitacion.habitaciones}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="No. habitación"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numHab}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Tarifa"/>
+                                </f:facet>
+                                <h:outputText value="$#{item.tarifa}.00"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Capacidad"/>
+                                </f:facet>
+                                <h:outputText value="#{item.capacidad} persona(s)"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="No. camas"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numCamas}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Piso"/>
+                                </f:facet>
+                                <h:outputText value="#{item.piso}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="TV"/>
+                                </f:facet>
+                                <h:outputText value="#{item.tv ? '✓' : 'X'}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Estado"/>
+                                </f:facet>
+                                <h:outputText value="#{item.estado}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                    
+                    
+                    
+                    
+                    
+                    <h:form rendered="#{aDHabitacion.getGestion(1)}">
+                    </h:form>
+                </f:view>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

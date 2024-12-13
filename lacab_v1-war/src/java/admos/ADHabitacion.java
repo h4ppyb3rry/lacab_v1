@@ -24,6 +24,7 @@ public class ADHabitacion implements Serializable {
     private MDHabitacion mDHabitacion;
 
     private Habitacion habitacion;
+    private String gestion[] = {"true", "false", "false"};
 
     public List<Habitacion> getHabitaciones() {
         return mDHabitacion.habitaciones();
@@ -38,25 +39,39 @@ public class ADHabitacion implements Serializable {
     }
 
     public void actualizarValor() {
-    if (habitacion != null) {
-        mDHabitacion.editarHabitacion(habitacion);
-    } else {
-        System.out.println("Error: No hay habitación para actualizar.");
+        if (habitacion != null) {
+            mDHabitacion.editarHabitacion(habitacion);
+        } else {
+            System.out.println("Error: No hay habitación para actualizar.");
+        }
     }
-}
-
 
     public List<Habitacion> getDisponibles() {
         return mDHabitacion.habitacionesDisponibles();
     }
-    
-    
-     public List<Habitacion> getOcupadas() {
+
+    public List<Habitacion> getOcupadas() {
         return mDHabitacion.habitacionesOcupadas();
     }
-     
-      public List<Habitacion> getMantenimiento() {
+
+    public List<Habitacion> getMantenimiento() {
         return mDHabitacion.habitacionesMantenimiento();
+    }
+
+    public void gestion(int ng) {
+
+        for (int n = 0; n < 3; n++) {
+            if (n == ng) {
+                gestion[ng] = "true";
+            } else {
+                gestion[n] = "false";
+            }
+
+        }
+    }
+
+    public String getGestion(int ng) {
+        return gestion[ng];
     }
 
     public ADHabitacion() {

@@ -46,7 +46,7 @@ public class ADReserva implements Serializable {
     private List<DetalleReservacion> listaDetalles;
     private Nota nota;
     private Habitacion habSelec;
-    private String gestion[] = {"false", "false", "false"};
+    private String gestion[] = {"true", "false", "false"};
 
     @Inject
     private ADHabitacion aDHabitacion;

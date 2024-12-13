@@ -28,10 +28,15 @@
             <ui:define name="content">
                 <f:view>
                     <h:form rendered="#{aDReserva.getGestion(0)}">
-                        <p:commandButton value="+ Nueva Reserva" action="#{aDReserva.nuevaReserva()}" ajax="false" />
+
                         <p:growl id="mensaje" life="5000"/>  
                         <h1><h:outputText value="Reservas Activas"/></h1>
-                        <h:outputText value="Reservas totales: #{aDReserva.activas.size()}" />
+
+                        <p:commandButton value="+ Nueva Reserva" action="#{aDReserva.nuevaReserva()}" ajax="false" />
+                        <br></br> 
+                        <br></br> 
+                        <h:outputText value="Reservas: #{aDReserva.activas.size()}" />
+
                         <p:dataTable value="#{aDReserva.activas}" var="item">
                             <p:column>
                                 <f:facet name="header">
@@ -84,7 +89,9 @@
                     <h:form rendered="#{aDReserva.getGestion(1)}">
 
                         <p:growl id="mensaje" life="5000"/>  
-                        <h1><h:outputText value="Reservas Totales"/></h1>
+                        <h1><h:outputText value="Todas las Reservas"/></h1>
+
+                        <br></br> 
                         <h:outputText value="Reservas totales: #{aDReserva.reservaciones.size()}" />
                         <p:dataTable value="#{aDReserva.reservaciones}" var="item">
                             <p:column>

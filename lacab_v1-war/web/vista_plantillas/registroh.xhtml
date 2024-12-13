@@ -17,15 +17,15 @@
                 <h1><h:outputText value="Registro de Huéspedes"/></h1>
                 <p:panelGrid columns="2">
                     <p:outputLabel value="Nombre:" for="nombre" />
-                    <p:inputText id="nombre" value="#{aDHuesped.huesped.nombre}" title="Nombre" required="true" requiredMessage="Ingresa un nombre."  />
+                    <p:inputText id="nombre" value="#{aDHuesped.huesped.nombre}" title="Nombre" required="true" requiredMessage="Ingresa un nombre." validator="#{aDHuesped.vLetras}"/>
                     <p:outputLabel value="Ocupación:" for="ocupacion" />
-                    <p:inputText id="ocupacion" value="#{aDHuesped.huesped.ocupacion}" title="Ocupacion" required="true" requiredMessage="Ingresa un una ocupación."  />
+                    <p:inputText id="ocupacion" value="#{aDHuesped.huesped.ocupacion}" title="Ocupacion" required="true" requiredMessage="Ingresa un una ocupación." validator="#{aDHuesped.vLetras}" />
                     <p:outputLabel value="Residencia:" for="residencia" />
-                    <p:inputText id="residencia" value="#{aDHuesped.huesped.residencia}" title="Residencia" required="true" requiredMessage="Ingresa un lugar de residencia." />
+                    <p:inputText id="residencia" value="#{aDHuesped.huesped.residencia}" title="Residencia" required="true" requiredMessage="Ingresa un lugar de residencia." validator="#{aDHuesped.vLetras}"/>
                     <p:outputLabel value="Domicilio:" for="domicilio" />
                     <p:inputText id="domicilio" value="#{aDHuesped.huesped.domicilio}" title="Domicilio" required="true" requiredMessage="Ingresa un domicilio."/>
                     <p:outputLabel value="Nacionalidad:" for="nacionalidad" />
-                    <p:inputText id="nacionalidad" value="#{aDHuesped.huesped.nacionalidad}" title="Nacionalidad" required="true" requiredMessage="Ingresa una nacionalidad." />
+                    <p:inputText id="nacionalidad" value="#{aDHuesped.huesped.nacionalidad}" title="Nacionalidad" required="true" requiredMessage="Ingresa una nacionalidad." validator="#{aDHuesped.vLetras}"/>
                 </p:panelGrid>
                 <p:commandButton value="REGISTRAR" actionListener="#{aDHuesped.registroHuesped()}" ajax="false" update="mensaje"/>
             </h:form>
