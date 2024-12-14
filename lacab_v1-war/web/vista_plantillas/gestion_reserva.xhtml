@@ -77,7 +77,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Acciones"/>
                                 </f:facet>
-
+                                
                                 <p:commandButton value="NOTA" action="#{aDNota.registroNota(item)}" ajax="false" update="mensaje btnfin" />
                                 <p:commandButton id="btnfin" value="FINALIZAR" action="#{aDReserva.finalizarReserva(item)}" ajax="false" disabled="#{!aDNota.isNotaGenerada(item)}" />
                             </p:column>
@@ -141,6 +141,53 @@
                                     <h:outputText value="Acciones"/>
                                 </f:facet>
                                 <p:commandButton value="NOTA" action="#{aDNota.cargarNota(item)}" ajax="false" update="mensaje btnfin" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+
+
+
+                <f:view>
+
+
+                    <h:form rendered="#{aDReserva.getGestion(2)}">
+                        <h1><h:outputText value="Reportes de Incidencias"/></h1>
+                        <p:commandButton value="+ Nuevo Reporte" action="#{aDIncidencia.nReporte()}" ajax="false" />
+                        <br></br> 
+                        <br></br> 
+                        <p:dataTable value="#{aDIncidencia.reportesI}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="NumReporte"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numReporte}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Descripcion"/>
+                                </f:facet>
+                                <h:outputText value="#{item.descripcion}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha de Reporte"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fecha}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="No. Reserva"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numReserva.numReserva}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Huésped asociado"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numReserva.numHuesped.nombre}"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>

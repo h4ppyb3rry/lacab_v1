@@ -46,4 +46,8 @@ public class MDReserva {
         }
         return reservacionF.totalVisitas(h);
     }
+    
+    public Reservacion buscarReserva(Integer id) {
+        return reservacionF.find(id);
+    }
 }

@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../resources/navbar_simple.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+
+                    <p:growl id="mensaje"/>
+                    <h:form>
+                        <h1><h:outputText value="Nuevo Reporte de Incidencias"/></h1>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Descripcion:" for="descripcion" />
+
+                            <p:inputTextarea id="descripcion" value="#{aDIncidencia.reporteI.descripcion}" title="Descripcion" required="true" requiredMessage="La descripción es obligatoria."/>
+                            
+
+                            <p:outputLabel value="NumReserva:" for="numReserva" />
+                            <p:selectOneMenu id="numReserva" value="#{aDIncidencia.reporteI.numReserva}" required="true" converter="#{reservaConverter}" requiredMessage="Selecciona una reserva">
+                                <f:selectItems value="#{aDReserva.reservaciones}" var="reserva" 
+                                               itemLabel="#{reserva.numReserva}" itemValue="#{reserva}" />
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:commandButton value="GENERAR" action="#{aDIncidencia.nuevoReporte}" ajax="false" update="mensaje"/>
+
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>
