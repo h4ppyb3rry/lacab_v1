@@ -43,7 +43,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Reservacion.findByFechaSalida", query = "SELECT r FROM Reservacion r WHERE r.fechaSalida = :fechaSalida"),
     @NamedQuery(name = "Reservacion.findByDeposito", query = "SELECT r FROM Reservacion r WHERE r.deposito = :deposito"),
     @NamedQuery(name = "Reservacion.findByEstado", query = "SELECT r FROM Reservacion r WHERE r.estado = :estado"),
-    @NamedQuery(name = "Reservacion.findByNecesEsp", query = "SELECT r FROM Reservacion r WHERE r.necesEsp = :necesEsp")})
+    @NamedQuery(name = "Reservacion.findByNecesEsp", query = "SELECT r FROM Reservacion r WHERE r.necesEsp = :necesEsp"),
+  /*  @NamedQuery(name = "Reservacion.findByFechaHoy", query = "SELECT r FROM Reservacion r WHERE FUNCTION('DATE', r.fechaLlegada) = :fechaHoy")*/
+})
 public class Reservacion implements Serializable {
 
     private static final long serialVersionUID = 1L;

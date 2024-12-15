@@ -92,7 +92,7 @@
                         <p:growl id="mensaje" life="5000"/>  
                         <h1><h:outputText value="Todas las Reservas"/></h1>
                        
-                        <p:dataTable value="#{aDReserva.reservaciones}" var="item"  paginator="true" rows="8">
+                        <p:dataTable value="#{aDReserva.reservaciones}" var="item"  paginator="true" rows="9">
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="NumReserva"/>
@@ -162,13 +162,18 @@
                                 </f:facet>
                                 <h:outputText value="#{item.numReporte}"/>
                             </p:column>
-                            <p:column>
+                              <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="Descripcion"/>
+                                    <h:outputText value="Descripción"/>
                                 </f:facet>
-                                <h:outputText value="#{item.descripcion}"/>
+                                <h:commandLink value="Ver descripción">
+                                    <p:dialog header="Descripción completa" widgetVar="dlg#{item.numReporte}" modal="true" width="500">
+                                        <h:outputText value="#{item.descripcion}" escape="false" />
+                                    </p:dialog>
+                                    <p:ajax event="click" oncomplete="PF('dlg#{item.numReporte}').show();" />
+                                </h:commandLink>
                             </p:column>
-                            <p:column>
+                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Fecha de Reporte"/>
                                 </f:facet>

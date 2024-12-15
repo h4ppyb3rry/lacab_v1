@@ -27,11 +27,6 @@
                     <h:form rendered="#{aDHabitacion.getGestion(0)}">
 
                         <h1><h:outputText value="Monitoreo de habitaciones"/></h1>
-                        <p:panelGrid columns="3">
-                            <h:outputText value="Disponibles: #{aDHabitacion.disponibles.size()}"/>
-                            <h:outputText value="En mantenimiento: #{aDHabitacion.mantenimiento.size()}"/>
-                            <h:outputText value="Ocupadas: #{aDHabitacion.ocupadas.size()}"/>
-                        </p:panelGrid>
                         <br></br>
                         <p:dataTable value="#{aDHabitacion.habitaciones}" var="item">
                             <p:column>
@@ -76,6 +71,11 @@
                                 </f:facet>
                                 <h:outputText value="#{item.estado}"/>
                             </p:column>
+                             <f:facet name="footer">
+                                Disponibles: #{aDHabitacion.disponibles.size()}     
+                                |   En mantenimiento: #{aDHabitacion.mantenimiento.size()}  
+                                |   Ocupadas: #{aDHabitacion.ocupadas.size()}
+                            </f:facet>
                         </p:dataTable>
                     </h:form>
 

@@ -4,12 +4,14 @@
  */
 package accesodatos;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import modelo.Huesped;
 import modelo.Reservacion;
 
@@ -55,5 +57,13 @@ public class ReservacionFacade extends AbstractFacade<Reservacion> {
             return 0;
         } 
     }
+    
+   /*
+    public List<Reservacion> obtenerReservasDelDia(Date fechaHoy) {
+    TypedQuery<Reservacion> query = em.createNamedQuery("Reservacion.findByFechaHoy", Reservacion.class);
+    query.setParameter("fechaHoy", fechaHoy);
+    return query.getResultList();
+}*/
+
 
 }

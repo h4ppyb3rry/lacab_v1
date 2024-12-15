@@ -48,7 +48,6 @@ public class SuministrosFacade extends AbstractFacade<Suministros> {
                     Suministros.class
             ).getSingleResult();
         } catch (Exception e) {
-            // Manejar casos como cuando la tabla está vacía
             return null;
         }
     }
