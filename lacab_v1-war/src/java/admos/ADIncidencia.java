@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import manipuladatos.MDIncidencias;
+import modelo.Huesped;
 import modelo.Reporteinci;
 import modelo.Reservacion;
 
@@ -56,7 +57,10 @@ public class ADIncidencia implements Serializable {
         return "reporteIn_nuevo.xhtml?faces-redirect=true";
     }
 
-    
+    public int incidencias(Huesped h) {
+        return mDIncidencias.incidenciasXHuesped(h);
+
+    }
     public ADIncidencia() {
         creaReporte();
     }

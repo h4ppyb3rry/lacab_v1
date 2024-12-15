@@ -6,8 +6,12 @@ package accesodatos;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import modelo.Huesped;
 import modelo.Reporteinci;
+import modelo.Reservacion;
 
 /**
  *
@@ -27,5 +31,25 @@ public class ReporteinciFacade extends AbstractFacade<Reporteinci> {
     public ReporteinciFacade() {
         super(Reporteinci.class);
     }
+    
+    
+    public int contarIncidenciasPorHuesped(Huesped h) {
+    try {
+        Query consulta = em.createQuery(
+            "SELECT COUNT(ri) " +
+            "FROM Reporteinci ri " +
+            "JOIN ri.numReserva r " +
+            "WHERE r.numHuesped.numHuesped = :numHuesped"
+        );
+        consulta.setParameter("numHuesped", h.getNumHuesped());
+        Long totalIncidencias = (Long) consulta.getSingleResult();
+
+        return totalIncidencias.intValue();
+    } catch (NoResultException e) {
+        return 0;
+    }
+}
+
+    
     
 }

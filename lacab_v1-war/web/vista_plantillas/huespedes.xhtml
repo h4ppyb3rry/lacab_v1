@@ -13,51 +13,66 @@
             <ui:define name="content">
                 <f:view>
 
-            <h:form>
 
-                <h1><h:outputText value="Huéspedes Registrados"/></h1>
-                <br></br>
-                <p:commandButton value="+ Nuevo Huésped" action="#{aDHuesped.nuevoHuesped()}" ajax="false" />
-                <p:dataTable value="#{aDHuesped.huespedes}" var="item">
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Nombre"/>
-                        </f:facet>
-                        <h:outputText value="#{item.nombre}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Ocupación"/>
-                        </f:facet>
-                        <h:outputText value="#{item.ocupacion}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Residencia"/>
-                        </f:facet>
-                        <h:outputText value="#{item.residencia}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Domicilio"/>
-                        </f:facet>
-                        <h:outputText value="#{item.domicilio}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Nacionalidad"/>
-                        </f:facet>
-                        <h:outputText value="#{item.nacionalidad}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="No. visitas"/>
-                        </f:facet>
-                        <h:outputText value="#{aDReserva.visitasTotales(item)}"/>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-        </f:view>
+
+                    <h1><h:outputText value="Huéspedes Registrados"/></h1>
+                    <br></br>
+                    <h:form>
+                        <p:commandButton value="+ Nuevo Huésped" action="#{aDHuesped.nuevoHuesped()}" ajax="false" />
+                    </h:form>
+                    <h:form>
+
+                        <p:dataTable value="#{aDHuesped.huespedes}" var="item" scrollable="true" scrollHeight="390" paginator="true" rows="10" 
+                                     widgetVar="huespedTable" filteredValue="#{aDHuesped.filteredHuespedes}">
+
+
+                            <p:column filterBy="#{item.nombre}" headerText="Nombre" filterMatchMode="contains">
+                                <f:facet name="filter">
+                                    <p:inputText placeholder="Buscar por nombre" onkeyup="PF('huespedTable').filter()" />
+                                </f:facet>
+                                <h:outputText value="#{item.nombre}"/>
+                            </p:column>
+
+                            <!-- Otras columnas -->
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Ocupación"/>
+                                </f:facet>
+                                <h:outputText value="#{item.ocupacion}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Residencia"/>
+                                </f:facet>
+                                <h:outputText value="#{item.residencia}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Domicilio"/>
+                                </f:facet>
+                                <h:outputText value="#{item.domicilio}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nacionalidad"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nacionalidad}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="No. Visitas"/>
+                                </f:facet>
+                                <h:outputText value="#{aDReserva.visitasTotales(item)}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Reportes de Incidencia"/>
+                                </f:facet>
+                                <h:outputText value="#{aDIncidencia.incidencias(item)}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
             </ui:define>
 
         </ui:composition>

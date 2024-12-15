@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -17,6 +18,8 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import manipuladatos.MDHuesped;
 import modelo.Huesped;
+import modelo.Reporteinci;
+import modelo.Reservacion;
 
 /**
  *
@@ -30,10 +33,19 @@ public class ADHuesped implements Serializable {
     private MDHuesped mDHuesped;
 
     private Huesped huesped;
+    private List<Huesped> filteredHuespedes;
     private static final Pattern LETRAS_PATTERN = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$");
 
     public void creaHuesped() {
         huesped = new Huesped();
+    }
+
+    public List<Huesped> getFilteredHuespedes() {
+        return filteredHuespedes;
+    }
+
+    public void setFilteredHuespedes(List<Huesped> filteredHuespedes) {
+        this.filteredHuespedes = filteredHuespedes;
     }
 
     public List<Huesped> getHuespedes() {
@@ -49,7 +61,6 @@ public class ADHuesped implements Serializable {
         creaHuesped();
     }
      */
-
     public void registroHuesped() {
         FacesContext contexto = FacesContext.getCurrentInstance();
 

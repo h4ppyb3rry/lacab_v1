@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import modelo.Huesped;
 import modelo.Reporteinci;
 
 /**
@@ -32,6 +33,12 @@ public class MDIncidencias {
     
      public Reporteinci buscarReporte(Integer id) {
         return reporteInF.find(id);
+    } 
+         public int incidenciasXHuesped(Huesped h) {
+        if (h == null || h.getNumHuesped() == null) {
+            return 0;
+        }
+        return reporteInF.contarIncidenciasPorHuesped(h);
     }
 
     

@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import modelo.DetalleReservacion;
 import modelo.Huesped;
 import modelo.Reservacion;
 
@@ -54,7 +53,7 @@ public class ReservacionFacade extends AbstractFacade<Reservacion> {
             return visitas.intValue();
         } catch (NoResultException e) {
             return 0;
-        }
+        } 
     }
 
 }

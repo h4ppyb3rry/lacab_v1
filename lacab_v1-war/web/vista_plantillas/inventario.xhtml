@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../resources/navbar_simple.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                         <h1><h:outputText value="Suministros del Hotel"/></h1>
+                        <p:commandButton value="+ Nuevo Sumnistro" action="#{aDSuministros.nSuministro()}" ajax="false" />
+                    </h:form>
+
+                    <h:form>
+                       
+                        <p:dataTable value="#{aDSuministros.suministros}" var="item" scrollable="true" scrollHeight="390" paginator="true" rows="10">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Existencia"/>
+                                </f:facet>
+                                <h:outputText value="#{item.existencia}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Última actualización"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fechaUpdt}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Categoria"/>
+                                </f:facet>
+                                <h:outputText value="#{item.categoria}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Acciones"/>
+                                </f:facet>
+                                <p:commandButton value="ACTUALIZAR" action="#{aDSuministros.buscarSumPorId(item.numSuministro)}" ajax="false" update="mensaje" styleClass="button-spacing"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

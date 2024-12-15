@@ -47,12 +47,19 @@ public class ADReserva implements Serializable {
     private Nota nota;
     private Habitacion habSelec;
     private String gestion[] = {"true", "false", "false"};
+    private Date fechaHoy = new Date();
 
     @Inject
     private ADHabitacion aDHabitacion;
 
     @Inject
     private ADDetalle aDDetalle;
+    
+    
+        private List<Reservacion> filteredReservas;
+        public List<Reservacion> getFilteredReservas() {
+        return filteredReservas;
+    }
 
     public Huesped getNumHuesped() {
         return numHuesped;
@@ -77,6 +84,16 @@ public class ADReserva implements Serializable {
     public void setListaDetalles(List<DetalleReservacion> listaDetalles) {
         this.listaDetalles = listaDetalles;
     }
+
+    public Date getFechaHoy() {
+        return fechaHoy;
+    }
+
+    public void setFechaHoy(Date fechaHoy) {
+        this.fechaHoy = fechaHoy;
+    }
+    
+    
 
     public String registroReserva() {
         reserva.setEstado("ACTIVA");
@@ -179,10 +196,11 @@ public class ADReserva implements Serializable {
             mDReserva.actualizarReserva(reserva);
 
             System.out.println("Reservación " + reserva.getNumReserva() + " ha sido finalizada.");
-            FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Reservación finalizada correctamente", null);
+            FacesMessage mensaje = new FacesMessage(
+                    "Reservación finalizada correctamente");
             FacesContext.getCurrentInstance().addMessage(null, mensaje);
         } else {
+            
             System.err.println("Error al finalizar la reservación: reserva nula.");
         }
     }
@@ -204,6 +222,7 @@ public class ADReserva implements Serializable {
     public List<Habitacion> hDisponibles() {
         return aDHabitacion.getDisponibles();
     }
+    
 
     public int visitasTotales(Huesped h) {
         return mDReserva.visitasTotales(h);

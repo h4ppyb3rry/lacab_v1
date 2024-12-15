@@ -22,13 +22,15 @@
                             <p:outputLabel value="Número de personas" for="numPersonas" />
                             <p:inputText id="numPersonas" value="#{aDReserva.reserva.numPersonas}" title="NumPersonas" required="true" requiredMessage="The NumPersonas field is required."/>
                             <p:outputLabel value="Fecha de llegada:" for="fechaLlegada" />
-                            <p:inputText id="fechaLlegada" value="#{aDReserva.reserva.fechaLlegada}" title="FechaLlegada" required="true" requiredMessage="The FechaLlegada field is required." validator="#{aDReserva.vFechas}">
+                            <p:calendar id="fechaLlegada" value="#{aDReserva.reserva.fechaLlegada}" title="FechaLlegada" required="true" mode="popup" showOn="button" navigator="true" mindate="#{aDReserva.fechaHoy}" validator="#{aDReserva.vFechas}">
                                 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
-                            </p:inputText>
+                            </p:calendar>
+
                             <p:outputLabel value="Fecha de salida:" for="fechaSalida" />
-                            <p:inputText id="fechaSalida" value="#{aDReserva.reserva.fechaSalida}" title="FechaSalida" required="true"  >
+                            <p:calendar id="fechaSalida" value="#{aDReserva.reserva.fechaSalida}" title="FechaSalida" required="true" mode="popup" showOn="button" navigator="true">
                                 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
-                            </p:inputText>
+                            </p:calendar>
+                           
                             <p:outputLabel value="Deposito inicial:" for="deposito" />
                             <p:selectOneRadio id="deposito" required="true" value="#{aDReserva.reserva.deposito}" >
                                 <f:selectItem itemValue="true" itemLabel="Sí" />
