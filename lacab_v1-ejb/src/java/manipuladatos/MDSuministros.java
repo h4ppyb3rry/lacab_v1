@@ -38,6 +38,15 @@ public class MDSuministros {
     public Suministros buscarSumPorId(Integer id) {
         return suministrosF.find(id);
     }
+    
+    
+    public Suministros maxExistencia() {
+        return suministrosF.findMaxExistencia();
+    }
+    
+    public Suministros minExistencia() {
+        return suministrosF.findMinExistencia();
+    }
 
     
 }

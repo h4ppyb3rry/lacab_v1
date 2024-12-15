@@ -84,10 +84,7 @@
                         <p:growl id="mensaje" life="5000"/>  
                         <h1><h:outputText value="Reportes Activos"/></h1>
 
-                        <p:commandButton value="+ Nuevo Reporte" action="#{aDMantenimiento.nReporte()}" ajax="false"/>
-                        <br></br> 
-                        <br></br> 
-                        <h:outputText value="Reportes de mantenimiento: #{aDMantenimiento.reportesM.size()}" />
+                        <p:commandButton value="+ Nuevo Reporte" action="#{aDMantenimiento.nReporte()}" ajax="false" styleClass="button-spacing"/>
 
                         <p:dataTable value="#{aDMantenimiento.activos}" var="item" scrollable="true" scrollHeight="350">
                             <p:column>
@@ -136,6 +133,9 @@
                                 </f:facet>
                                 <p:commandButton value="CERRAR" action="#{aDMantenimiento.cerrarReporte(item)}" ajax="false" update="mensaje" />
                             </p:column>
+                            <f:facet name="footer">
+                                Reportes de mantenimiento: #{aDMantenimiento.activos.size()}
+                            </f:facet>
                         </p:dataTable>
                     </h:form>
 
@@ -145,10 +145,8 @@
                         <p:growl id="mensaje" life="5000"/>  
                         <h1><h:outputText value="Historial de Mantenimiento"/></h1>
 
-                        <p:commandButton value="+ Nuevo Reporte" action="#{aDMantenimiento.nReporte()}" ajax="false" />
-                        <br></br> 
-                        <br></br> 
-                        <h:outputText value="Reportes generados: #{aDMantenimiento.reportesM.size()}" />
+                        <p:commandButton value="+ Nuevo Reporte" action="#{aDMantenimiento.nReporte()}" ajax="false" styleClass="button-spacing"/>
+                        
 
                         <p:dataTable value="#{aDMantenimiento.reportesM}" var="item" scrollable="true" scrollHeight="350">
                             <p:column>
@@ -197,6 +195,9 @@
                                 </f:facet>
                                 <h:outputText value="#{item.estado}"/>
                             </p:column>
+                            <f:facet name="footer">
+                                Reportes generados: #{aDMantenimiento.reportesM.size()}
+                            </f:facet>
                         </p:dataTable>
                     </h:form>
                 </f:view>

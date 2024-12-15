@@ -76,6 +76,34 @@ public class ADSuministros implements Serializable {
         return "editar_sum.xhtml?faces-redirect=true"; 
 
     }
+    
+    public String sumMax() {
+    Suministros maxSuministro = mDSuministros.maxExistencia();
+    
+    if (maxSuministro != null) {
+        System.out.println("El suministro con mayor existencia es: " + maxSuministro.getNombre() + " con " + maxSuministro.getExistencia() + " unidades.");
+        String mayor = maxSuministro.getNombre();
+        return mayor;
+    } else {
+        System.out.println("No hay suministros registrados.");
+        return null;
+    }
+}
+    
+    public String sumMin() {
+    Suministros minSuministro = mDSuministros.minExistencia();
+    
+    if (minSuministro != null) {
+        System.out.println("El suministro con menor existencia es: " + minSuministro.getNombre() + " con " + minSuministro.getExistencia() + " unidades.");
+        String menor = minSuministro.getNombre();
+        return menor;
+    } else {
+        System.out.println("No hay suministros registrados.");
+        return null;
+    }
+}
+    
+  
 
     public ADSuministros() {
         creaSuministro();

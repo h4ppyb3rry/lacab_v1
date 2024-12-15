@@ -13,13 +13,17 @@
             <ui:define name="content">
                 <f:view>
                     <h:form>
-                         <h1><h:outputText value="Suministros del Hotel"/></h1>
-                        <p:commandButton value="+ Nuevo Sumnistro" action="#{aDSuministros.nSuministro()}" ajax="false" />
+                        <h1><h:outputText value="Suministros del Hotel"/></h1>
+                        <br></br>
+                        <p:commandButton value="+ Nuevo Sumnistro" action="#{aDSuministros.nSuministro()}" ajax="false" styleClass="button-spacing"/>
                     </h:form>
 
                     <h:form>
-                       
-                        <p:dataTable value="#{aDSuministros.suministros}" var="item" scrollable="true" scrollHeight="390" paginator="true" rows="10">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <h:outputText value="Suministro más abastecido: #{aDSuministros.sumMax()}" style="text-align: left; font-weight: bold;" />
+                            <h:outputText value="Suministro menos abastecido: #{aDSuministros.sumMin()}" style="text-align: left; font-weight: bold;" />
+                        </div>
+                        <p:dataTable value="#{aDSuministros.suministros}" var="item" paginator="true" rows="10">
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Nombre"/>
@@ -37,7 +41,7 @@
                                     <h:outputText value="Última actualización"/>
                                 </f:facet>
                                 <h:outputText value="#{item.fechaUpdt}">
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/>
                                 </h:outputText>
                             </p:column>
                             <p:column>
@@ -46,12 +50,16 @@
                                 </f:facet>
                                 <h:outputText value="#{item.categoria}"/>
                             </p:column>
+
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Acciones"/>
                                 </f:facet>
                                 <p:commandButton value="ACTUALIZAR" action="#{aDSuministros.buscarSumPorId(item.numSuministro)}" ajax="false" update="mensaje" styleClass="button-spacing"/>
                             </p:column>
+                            <f:facet name="footer">
+                                Suministros registrados: #{aDSuministros.suministros.size()} 
+                            </f:facet>
                         </p:dataTable>
                     </h:form>
                 </f:view>

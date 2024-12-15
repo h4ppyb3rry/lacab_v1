@@ -28,4 +28,29 @@ public class SuministrosFacade extends AbstractFacade<Suministros> {
         super(Suministros.class);
     }
     
+    
+     public Suministros findMaxExistencia() {
+        try {
+            return em.createQuery(
+                    "SELECT s FROM Suministros s WHERE s.existencia = (SELECT MAX(s1.existencia) FROM Suministros s1)", 
+                    Suministros.class
+            ).getSingleResult();
+        } catch (Exception e) {
+            
+            return null;
+        }
+    }
+     
+      public Suministros findMinExistencia() {
+        try {
+            return em.createQuery(
+                    "SELECT s FROM Suministros s WHERE s.existencia = (SELECT MIN(s1.existencia) FROM Suministros s1)", 
+                    Suministros.class
+            ).getSingleResult();
+        } catch (Exception e) {
+            // Manejar casos como cuando la tabla está vacía
+            return null;
+        }
+    }
+    
 }

@@ -143,4 +143,4 @@ public class Suministros implements Serializable {
         return "modelo.Suministros[ numSuministro=" + numSuministro + " ]";
     }
     
-}
+} 
